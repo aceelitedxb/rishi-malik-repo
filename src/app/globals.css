@@ -1,26 +1,124 @@
-@import "tailwindcss";
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap');
 
+/* CSS Variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --rich-black: #0a0a0a;
+    --midnight: #1a1a1a;
+    --luxury-gold: #d4af37;
+    --champagne-gold: #f7e7ce;
+    --dark-gold: #b8941f;
+    --glass: rgba(255, 255, 255, 0.05);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background: var(--rich-black);
+    color: #fff;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Modern Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 3rem 4rem;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #fff;
+}
+
+.logo-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align: center;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 300;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #f4df8e;
+}
+
+/* Hero Banner Section */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    nav {
+        padding: 2rem 2rem;
+    }
+    
+    .nav-links {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 1.5rem 1.5rem;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .nav-links {
+        gap: 1.5rem;
+    }
 }
