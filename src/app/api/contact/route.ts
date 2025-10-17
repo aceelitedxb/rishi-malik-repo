@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, phone, email, country, propertyType, propertyInterest } = body;
+    const { name, phone, email, country, propertyType, propertyInterest } =
+      body;
 
     // Validate required fields
     if (!name || !phone || !email) {
@@ -31,7 +32,7 @@ Submitted at: ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })}
 
     // Using a free email service - Web3Forms (no registration needed, free tier)
     const web3FormsApiKey = '51e50f5a-4ae9-418f-8e47-1c88e21876a8'; // This is a demo key, replace with your own from https://web3forms.com
-    
+
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
@@ -71,4 +72,3 @@ Submitted at: ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })}
     );
   }
 }
-
