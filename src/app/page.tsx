@@ -7,24 +7,17 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faTwitter,
-  faDribbble,
-  faInstagram,
-  faFacebookF,
-} from '@fortawesome/free-brands-svg-icons';
-import {
   faArrowRight,
   faHome,
   faTasks,
   faStream,
   faCommentAlt,
   faEnvelope,
-  faPlus,
-  faMinus,
+  faNewspaper,
 } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 
 export default function Home() {
-  const faqItemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const devItemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const devTrackRef = useRef<HTMLDivElement | null>(null);
   const leftSidebarRef = useRef<HTMLDivElement | null>(null);
@@ -35,6 +28,14 @@ export default function Home() {
   const [selectedProperty, setSelectedProperty] = useState<string>('');
   const [activeSection, setActiveSection] = useState<string>('home');
   const [activeDevCard, setActiveDevCard] = useState<number>(0);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const toggleRightNav = () => {
     setIsRightNavVisible(!isRightNavVisible);
@@ -48,6 +49,56 @@ export default function Home() {
   const closeContactModal = () => {
     setIsContactModalOpen(false);
     setSelectedProperty('');
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          propertyInterest: selectedProperty || 'General Inquiry',
+          propertyType: 'Luxury Real Estate',
+          country: 'UAE',
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', phone: '', email: '', message: '' });
+        // Close modal if it's open
+        if (isContactModalOpen) {
+          closeContactModal();
+        }
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -81,87 +132,7 @@ export default function Home() {
     }
   };
 
-  const handleFaqClick = (index: number) => {
-    const faqItems = faqItemsRef.current;
-    const currentItem = faqItems[index];
-
-    if (!currentItem) return;
-
-    const question = currentItem.querySelector('.faq-question');
-    const answer = currentItem.querySelector('.faq-answer');
-    const toggle = currentItem.querySelector('.faq-toggle');
-
-    if (!question || !answer || !toggle) return;
-
-    const isActive = currentItem.classList.contains('active');
-
-    if (isActive) {
-      // Close FAQ
-      currentItem.classList.remove('active');
-      gsap.to(answer, {
-        height: 0,
-        opacity: 0,
-        duration: 0.4,
-        ease: 'power2.inOut',
-      });
-      gsap.to(toggle, {
-        rotation: 0,
-        duration: 0.3,
-        ease: 'power2.inOut',
-      });
-    } else {
-      // Close other FAQs first
-      faqItems.forEach((otherItem, otherIndex) => {
-        if (otherItem && otherIndex !== index) {
-          otherItem.classList.remove('active');
-          const otherAnswer = otherItem.querySelector('.faq-answer');
-          const otherToggle = otherItem.querySelector('.faq-toggle');
-          if (otherAnswer && otherToggle) {
-            gsap.to(otherAnswer, {
-              height: 0,
-              opacity: 0,
-              duration: 0.4,
-              ease: 'power2.inOut',
-            });
-            gsap.to(otherToggle, {
-              rotation: 0,
-              duration: 0.3,
-              ease: 'power2.inOut',
-            });
-          }
-        }
-      });
-
-      // Open current FAQ
-      currentItem.classList.add('active');
-      gsap.to(answer, {
-        height: 'auto',
-        opacity: 1,
-        duration: 0.4,
-        ease: 'power2.inOut',
-      });
-      gsap.to(toggle, {
-        rotation: 45,
-        duration: 0.3,
-        ease: 'power2.inOut',
-      });
-    }
-  };
-
   useEffect(() => {
-    // Initialize FAQ animations
-    const faqItems = faqItemsRef.current;
-
-    faqItems.forEach(item => {
-      if (item) {
-        const answer = item.querySelector('.faq-answer');
-        if (answer) {
-          // Set initial state
-          gsap.set(answer, { height: 0, opacity: 0 });
-        }
-      }
-    });
-
     // Handle sidebar visibility on scroll
     const handleScroll = () => {
       const bannerSection = bannerSectionRef.current;
@@ -187,7 +158,15 @@ export default function Home() {
 
     // Section detection for active navigation
     const handleSectionScroll = () => {
-      const sections = ['home', 'developers', 'locations', 'faqs', 'contact'];
+      const sections = [
+        'home',
+        'developers',
+        'insights',
+        'testimonials',
+        'blog',
+        'locations',
+        'contact',
+      ];
       const windowHeight = window.innerHeight;
 
       sections.forEach(sectionId => {
@@ -262,27 +241,6 @@ export default function Home() {
         }
       );
 
-      // Animate FAQ items
-      gsap.fromTo(
-        '.faq-item',
-        {
-          opacity: 0,
-          x: -30,
-        },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: '.faq-container',
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-
       // Animate developer cards
       gsap.fromTo(
         '.dev-card',
@@ -327,6 +285,19 @@ export default function Home() {
 
     // Run animations after a short delay to ensure DOM is ready
     setTimeout(animateElements, 100);
+
+    // Testimonials marquee toggle functionality
+    const control = document.getElementById('direction-toggle');
+    const marquees = document.querySelectorAll('.marquee');
+    const wrapper = document.querySelector('.wrapper');
+
+    if (control && marquees.length > 0 && wrapper) {
+      control.addEventListener('click', () => {
+        control.classList.toggle('toggle--vertical');
+        wrapper.classList.toggle('wrapper--vertical');
+        [...marquees].forEach(marquee => marquee.classList.toggle('marquee--vertical'));
+      });
+    }
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -395,23 +366,62 @@ export default function Home() {
           </div>
           <ul className='social-links justify-content-center'>
             <li>
-              <a href='#' target='_blank'>
-                <FontAwesomeIcon icon={faTwitter} />
+              <a
+                href='https://www.facebook.com/people/Ace-Elite-Properties/61572930571115/'
+                target='_blank'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  className='lucide lucide-facebook'
+                  aria-hidden='true'
+                >
+                  <path d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'></path>
+                </svg>
               </a>
             </li>
             <li>
-              <a href='#' target='_blank'>
-                <FontAwesomeIcon icon={faDribbble} />
+              <a href='https://www.linkedin.com/company/ace-elite-properties/' target='_blank'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  className='lucide lucide-linkedin'
+                  aria-hidden='true'
+                >
+                  <path d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z'></path>
+                  <rect width='4' height='12' x='2' y='9'></rect>
+                  <circle cx='4' cy='4' r='2'></circle>
+                </svg>
               </a>
             </li>
             <li>
-              <a href='#' target='_blank'>
-                <FontAwesomeIcon icon={faInstagram} />
-              </a>
-            </li>
-            <li>
-              <a href='#' target='_blank'>
-                <FontAwesomeIcon icon={faFacebookF} />
+              <a href='https://www.instagram.com/aceeliteproperties/' target='_blank'>
+                <svg
+                  fill='#fff'
+                  width='24'
+                  height='24'
+                  viewBox='-2 -2 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                  preserveAspectRatio='xMinYMin'
+                >
+                  <path d='M14.017 0h-8.07A5.954 5.954 0 0 0 0 5.948v8.07a5.954 5.954 0 0 0 5.948 5.947h8.07a5.954 5.954 0 0 0 5.947-5.948v-8.07A5.954 5.954 0 0 0 14.017 0zm3.94 14.017a3.94 3.94 0 0 1-3.94 3.94h-8.07a3.94 3.94 0 0 1-3.939-3.94v-8.07a3.94 3.94 0 0 1 3.94-3.939h8.07a3.94 3.94 0 0 1 3.939 3.94v8.07z'></path>
+                  <path d='M9.982 4.819A5.17 5.17 0 0 0 4.82 9.982a5.17 5.17 0 0 0 5.163 5.164 5.17 5.17 0 0 0 5.164-5.164A5.17 5.17 0 0 0 9.982 4.82zm0 8.319a3.155 3.155 0 1 1 0-6.31 3.155 3.155 0 0 1 0 6.31z'></path>
+                  <circle cx='15.156' cy='4.858' r='1.237'></circle>
+                </svg>
               </a>
             </li>
           </ul>
@@ -429,66 +439,188 @@ export default function Home() {
                 ✨ Dubai&apos;s #1 Luxury Expert
               </div>
               <h1 className='title split-text effect-right'>
-                Making Your World a Pain Free Experience
+                ABOUT MR. <span>RISHI MALIK</span>
               </h1>
               <div className='text-body-2 text'>
-                My passion lies in crafting elegant, straightforward digital experiences. <br />{' '}
-                It&apos;s a love for simplicity, pure and simple
+                Rishi Malik, CEO & Co-founder of ACE Elite Properties, is a leading Dubai real
+                estate expert specializing in ultra-luxury apartments, penthouses, and villas.
+                Partnered with top developers like Emaar, Damac, and Omniyat, he offers clients
+                exclusive access to off-market and pre-launch opportunities across the city’s most
+                iconic communities.
               </div>
             </div>
             <ul className='list-tags'>
               <li>
                 <a className='text-body-2' href='#'>
-                  <strong style={{ marginRight: '12px' }}>AED 500M+ </strong> Properties Sold
+                  <strong style={{ marginRight: '12px' }}>30 </strong> Global Real Estate Exclusives
                 </a>
               </li>
               <li>
                 <a className='text-body-2' href='#'>
-                  <strong style={{ marginRight: '12px' }}>1000+ </strong> Global Clients
+                  <strong style={{ marginRight: '12px' }}>25+ </strong> Countries Trusted by Global
+                  Investors
                 </a>
               </li>
               <li>
                 <a className='text-body-2' href='#'>
-                  <strong style={{ marginRight: '12px' }}> 10+</strong> Years Excellence
+                  <strong style={{ marginRight: '12px' }}>132+</strong> UHN Clients Served Globally
                 </a>
               </li>
             </ul>
           </div>
 
-          <div className='about_section'>
-            <div className='text-body-1 dot-before subtitle'>✨ About</div>
-            <h2>Your Trusted Guide to Dubai&apos;s Most Prestigious Properties</h2>
-            <p className='text-body-2 text'>
-              Rishi Malik is one of Dubai&apos;s leading real estate experts, specializing in
-              ultra-luxury apartments, penthouses, and villas across the city&apos;s most iconic
-              communities.
-            </p>
-            <p className='text-body-2 text'>
-              As the CEO & Co-Founder of ACE Elite Properties, Rishi brings a wealth of market
-              knowledge, negotiation expertise, and a reputation built on trust, transparency, and
-              performance.
-            </p>
-            <p className='text-body-2 text'>
-              With strong partnerships with Dubai&apos;s top developers — Emaar, Damac, Omniyat,
-              Binghatti, and Ellington — Rishi offers his clients exclusive access to off-market
-              opportunities and first launch inventory not available to the public.
-            </p>
-            <div className='cards_row'>
-              <div className='card-item'>
-                <h3 className='fw-medium title'>10+</h3>
-                <div className='text-body-1'>Years of Real Estate Excellence </div>
+          {/* Prime Locations Section */}
+          <div className='prime-locations-section animate-section' id='locations'>
+            <div className='locations-header'>
+              <div className='text-body-1 dot-before subtitle'>• Properties</div>
+              <h2 className='locations-title'>
+                BRANDED <span>LUXURY COLLECTION</span>
+              </h2>
+              <p className='text-body-2 text'>
+                Explore a selection of ready, under-construction, and off-plan properties personally
+                chosen by Rishi Malik — focusing on investment growth, exclusivity, and lifestyle
+                value.
+              </p>
+            </div>
+            <div className='locations-grid'>
+              <div className='location-card'>
+                <div className='location-image'>
+                  <Image
+                    src='/images/properties/cavali.jpg'
+                    alt='Cavalli Tower, Dubai Marina'
+                    width={400}
+                    height={300}
+                  />
+                </div>
+                <div className='location-content'>
+                  <h3 className='location-title'>CAVALLI TOWER</h3>
+                  <p className='location-developer'>By Damac</p>
+                  <div className='location-specs'>
+                    <span className='bedrooms'>1,2,3 BR</span>
+                    <span className='sqft'>1250sqft</span>
+                  </div>
+                  <div className='location-footer'>
+                    <span className='price'>Price: AED 20M</span>
+                    <button
+                      className='know-more-button'
+                      onClick={() => handleViewDetails('Cavalli Tower, Dubai Marina')}
+                    >
+                      KNOW MORE
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className='card-item'>
-                <h3 className='fw-medium title'>AED 500M+</h3>
-                <div className='text-body-1'>in Property Transactions</div>
+
+              <div className='location-card'>
+                <div className='location-image'>
+                  <Image
+                    src='/images/properties/one-canal.jpg'
+                    alt='One Canal, Omniyat'
+                    width={400}
+                    height={300}
+                  />
+                </div>
+                <div className='location-content'>
+                  <h3 className='location-title'>ONE CANAL</h3>
+                  <p className='location-developer'>By Omniyat</p>
+                  <div className='location-specs'>
+                    <span className='bedrooms'>2,3,4 BR</span>
+                    <span className='sqft'>1800sqft</span>
+                  </div>
+                  <div className='location-footer'>
+                    <span className='price'>Price: AED 35M</span>
+                    <button
+                      className='know-more-button'
+                      onClick={() => handleViewDetails('One Canal, Omniyat')}
+                    >
+                      KNOW MORE
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className='card-item'>
-                <h3 className='fw-medium title'>1000+</h3>
-                <div className='text-body-1'>Clients Served Globally</div>
+
+              <div className='location-card'>
+                <div className='location-image'>
+                  <Image
+                    src='/images/properties/the-valley.webp'
+                    alt='The Valley Villas, Emaar South'
+                    width={400}
+                    height={300}
+                  />
+                </div>
+                <div className='location-content'>
+                  <h3 className='location-title'>THE VALLEY VILLAS</h3>
+                  <p className='location-developer'>By Emaar</p>
+                  <div className='location-specs'>
+                    <span className='bedrooms'>3,4,5 BR</span>
+                    <span className='sqft'>2500sqft</span>
+                  </div>
+                  <div className='location-footer'>
+                    <span className='price'>Price: AED 15M</span>
+                    <button
+                      className='know-more-button'
+                      onClick={() => handleViewDetails('The Valley Villas, Emaar South')}
+                    >
+                      KNOW MORE
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className='card-item'>
-                <h3 className='fw-medium title'>65570</h3>
-                <div className='text-body-1'>RERA Licensed Broker - BRN </div>
+
+              <div className='location-card'>
+                <div className='location-image'>
+                  <Image
+                    src='/images/properties/binghatti.webp'
+                    alt='Binghatti Onyx, JVC'
+                    width={400}
+                    height={300}
+                  />
+                </div>
+                <div className='location-content'>
+                  <h3 className='location-title'>BINGHATTI ONYX</h3>
+                  <p className='location-developer'>By Binghatti</p>
+                  <div className='location-specs'>
+                    <span className='bedrooms'>1,2 BR</span>
+                    <span className='sqft'>950sqft</span>
+                  </div>
+                  <div className='location-footer'>
+                    <span className='price'>Price: AED 8M</span>
+                    <button
+                      className='know-more-button'
+                      onClick={() => handleViewDetails('Binghatti Onyx, JVC')}
+                    >
+                      KNOW MORE
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className='location-card'>
+                <div className='location-image'>
+                  <Image
+                    src='/images/properties/cavali.jpg'
+                    alt='Ellington Ocean House'
+                    width={400}
+                    height={300}
+                  />
+                </div>
+                <div className='location-content'>
+                  <h3 className='location-title'>ELLINGTON OCEAN HOUSE</h3>
+                  <p className='location-developer'>By Ellington</p>
+                  <div className='location-specs'>
+                    <span className='bedrooms'>2,3,4 BR</span>
+                    <span className='sqft'>1600sqft</span>
+                  </div>
+                  <div className='location-footer'>
+                    <span className='price'>Price: AED 25M</span>
+                    <button
+                      className='know-more-button'
+                      onClick={() => handleViewDetails('Ellington Ocean House')}
+                    >
+                      KNOW MORE
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -497,7 +629,9 @@ export default function Home() {
           <div className='developers-section animate-section' id='developers'>
             <div className='dev-header'>
               <div className='text-body-1 dot-before subtitle'>• Developers</div>
-              <h2 className='dev-title'>Official Partner with Dubai&apos;s Leading Developers</h2>
+              <h2 className='dev-title'>
+                PARTNERSHIP WITH <span>TOP DEVELOPERS</span>
+              </h2>
               <p className='text-body-2 text'>
                 Rishi Malik&apos;s long-standing partnerships with Dubai&apos;s top developers
                 ensure clients receive priority access, VIP invitations to new project launches, and
@@ -584,346 +718,577 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Prime Locations Section */}
-          <div className='prime-locations-section animate-section' id='locations'>
-            <div className='locations-header'>
-              <div className='text-body-1 dot-before subtitle'>• Properties</div>
-              <h2 className='locations-title'>Hand-Picked Properties Curated by Rishi Malik</h2>
+          {/* Dubai Insights Section */}
+          <div className='insights-section animate-section' id='insights'>
+            <div className='insights-header'>
+              <div className='text-body-1 dot-before subtitle'>• Insights</div>
+              <h2 className='insights-title'>
+                DUBAI INSIGHTS BY <span>RISHI MALIK</span>
+              </h2>
               <p className='text-body-2 text'>
-                Explore a selection of ready, under-construction, and off-plan properties personally
-                chosen by Rishi Malik — focusing on investment growth, exclusivity, and lifestyle
-                value.
+                Stay ahead of the market with Rishi&apos;s weekly insights, market analysis, and
+                exclusive updates on Dubai&apos;s luxury real estate trends and investment
+                opportunities.
               </p>
             </div>
-            <div className='locations-grid'>
-              <div className='location-card'>
-                <div className='location-image'>
-                  <Image
-                    src='/images/properties/cavali.jpg'
-                    alt='Cavalli Tower, Dubai Marina'
-                    width={400}
-                    height={300}
-                  />
+            <div className='insights-grid'>
+              <div className='insight-card'>
+                <div className='insight-image'>
+                  <div className='insight-placeholder'>
+                    <span>Weekly Insight</span>
+                  </div>
                 </div>
-                <div className='location-content'>
-                  <h3 className='location-title'>Cavalli Tower, Dubai Marina</h3>
-                  <p className='location-description'>Branded residences by Damac x Cavalli</p>
-                  <button
-                    className='enroll-button'
-                    onClick={() => handleViewDetails('Cavalli Tower, Dubai Marina')}
-                  >
-                    View Details
-                    <FontAwesomeIcon icon={faArrowRight} className='enroll-icon' />
-                  </button>
+                <div className='insight-content'>
+                  <h3 className='insight-title'>WEEKLY INSIGHT</h3>
+                  <button className='download-button'>DOWNLOAD</button>
                 </div>
               </div>
 
-              <div className='location-card'>
-                <div className='location-image'>
+              <div className='insight-card'>
+                <div className='insight-image'>
+                  <div className='insight-placeholder'>
+                    <span>Weekly Insight</span>
+                  </div>
+                </div>
+                <div className='insight-content'>
+                  <h3 className='insight-title'>WEEKLY INSIGHT</h3>
+                  <button className='download-button'>DOWNLOAD</button>
+                </div>
+              </div>
+
+              <div className='insight-card'>
+                <div className='insight-image'>
+                  <div className='insight-placeholder'>
+                    <span>Weekly Insight</span>
+                  </div>
+                </div>
+                <div className='insight-content'>
+                  <h3 className='insight-title'>WEEKLY INSIGHT</h3>
+                  <button className='download-button'>DOWNLOAD</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimonials Section */}
+          <div className='testimonials-section animate-section' id='testimonials'>
+            <div className='testimonials-header'>
+              <div className='text-body-1 dot-before subtitle'>• Testimonials</div>
+              <h2 className='testimonials-title'>
+                WHAT OUR <span>CLIENTS SAY</span>
+              </h2>
+              <p className='text-body-2 text'>
+                Hear from our satisfied clients who have successfully invested in Dubai&apos;s
+                luxury real estate market through our expert guidance.
+              </p>
+            </div>
+
+            <button className='toggle' id='direction-toggle'>
+              <span>Toggle scroll axis</span>
+              <svg aria-hidden='true' viewBox='0 0 512 512' width='100'>
+                <title>arrows-alt-h</title>
+                <path d='M377.941 169.941V216H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.568 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296h243.882v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.568 0-33.941l-86.059-86.059c-15.119-15.12-40.971-4.412-40.971 16.97z' />
+              </svg>
+            </button>
+
+            <article className='wrapper'>
+              <div className='marquee'>
+                <div className='marquee__group'>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;I had an amazing experience purchasing an off-plan property through
+                        this platform. The team guided me through every step, provided detailed
+                        insights, and ensured a smooth transaction. Highly recommended for anyone
+                        looking to invest in Dubai real estate!&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Michael R.</h4>
+                        <span>Investor</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;After searching for months, I finally found the perfect villa thanks
+                        to this website. The listings were up-to-date, and the agents were extremely
+                        helpful. They understood my requirements and made the entire process
+                        stress-free.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Sarah L.</h4>
+                        <span>Homeowner</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;As a first-time investor in Dubai, I was unsure about the market. The
+                        team not only provided great property options but also gave me valuable
+                        advice on ROI and future growth potential. Their expertise made all the
+                        difference!&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>James T.</h4>
+                        <span>Real Estate Investor</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;From my initial inquiry to the final handover, the service was
+                        top-notch. The agents were transparent, knowledgeable, and always available
+                        to answer my questions. I couldn&apos;t have asked for a better experience
+                        in buying my new apartment.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Aisha K.</h4>
+                        <span>Dubai Resident</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div aria-hidden='true' className='marquee__group'>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;I had an amazing experience purchasing an off-plan property through
+                        this platform. The team guided me through every step, provided detailed
+                        insights, and ensured a smooth transaction. Highly recommended for anyone
+                        looking to invest in Dubai real estate!&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Michael R.</h4>
+                        <span>Investor</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;After searching for months, I finally found the perfect villa thanks
+                        to this website. The listings were up-to-date, and the agents were extremely
+                        helpful. They understood my requirements and made the entire process
+                        stress-free.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Sarah L.</h4>
+                        <span>Homeowner</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;As a first-time investor in Dubai, I was unsure about the market. The
+                        team not only provided great property options but also gave me valuable
+                        advice on ROI and future growth potential. Their expertise made all the
+                        difference!&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>James T.</h4>
+                        <span>Real Estate Investor</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;From my initial inquiry to the final handover, the service was
+                        top-notch. The agents were transparent, knowledgeable, and always available
+                        to answer my questions. I couldn&apos;t have asked for a better experience
+                        in buying my new apartment.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Aisha K.</h4>
+                        <span>Dubai Resident</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className='marquee marquee--reverse'>
+                <div className='marquee__group'>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;I had an amazing experience purchasing an off-plan property through
+                        this platform. The team guided me through every step, provided detailed
+                        insights, and ensured a smooth transaction. Highly recommended for anyone
+                        looking to invest in Dubai real estate!&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Michael R.</h4>
+                        <span>Investor</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;After searching for months, I finally found the perfect villa thanks
+                        to this website. The listings were up-to-date, and the agents were extremely
+                        helpful. They understood my requirements and made the entire process
+                        stress-free.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Sarah L.</h4>
+                        <span>Homeowner</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;As a first-time investor in Dubai, I was unsure about the market. The
+                        team not only provided great property options but also gave me valuable
+                        advice on ROI and future growth potential. Their expertise made all the
+                        difference!&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>James T.</h4>
+                        <span>Real Estate Investor</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;From my initial inquiry to the final handover, the service was
+                        top-notch. The agents were transparent, knowledgeable, and always available
+                        to answer my questions. I couldn&apos;t have asked for a better experience
+                        in buying my new apartment.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Aisha K.</h4>
+                        <span>Dubai Resident</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div aria-hidden='true' className='marquee__group'>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;I had an amazing experience purchasing an off-plan property through
+                        this platform. The team guided me through every step, provided detailed
+                        insights, and ensured a smooth transaction. Highly recommended for anyone
+                        looking to invest in Dubai real estate!&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Michael R.</h4>
+                        <span>Investor</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;After searching for months, I finally found the perfect villa thanks
+                        to this website. The listings were up-to-date, and the agents were extremely
+                        helpful. They understood my requirements and made the entire process
+                        stress-free.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Sarah L.</h4>
+                        <span>Homeowner</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;As a first-time investor in Dubai, I was unsure about the market. The
+                        team not only provided great property options but also gave me valuable
+                        advice on ROI and future growth potential. Their expertise made all the
+                        difference!&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>James T.</h4>
+                        <span>Real Estate Investor</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;From my initial inquiry to the final handover, the service was
+                        top-notch. The agents were transparent, knowledgeable, and always available
+                        to answer my questions. I couldn&apos;t have asked for a better experience
+                        in buying my new apartment.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Aisha K.</h4>
+                        <span>Dubai Resident</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          {/* Blog Section */}
+          <div className='blog-section animate-section' id='blog'>
+            <div className='blog-header'>
+              <div className='text-body-1 dot-before subtitle'>• Blog</div>
+              <h2 className='blog-title'>
+                LATEST INSIGHTS & <span>MARKET UPDATES</span>
+              </h2>
+              <p className='text-body-2 text'>
+                Stay informed with expert analysis, market trends, and investment opportunities in
+                Dubai&apos;s luxury real estate market.
+              </p>
+            </div>
+            <div className='blog-grid'>
+              <div className='blog-card'>
+                <div className='blog-image'>
+                  <Image
+                    src='/images/properties/cavali.jpg'
+                    alt='Dubai Real Estate Market Trends 2024'
+                    width={400}
+                    height={300}
+                  />
+                  <div className='blog-category'>Latest</div>
+                </div>
+                <div className='blog-content'>
+                  <div className='blog-meta'>
+                    <span className='blog-date'>15 Jul, 2025</span>
+                    <span className='blog-read-time'>5 min read</span>
+                  </div>
+                  <h3 className='blog-title-card'>
+                    Dubai Real Estate Hits $7 Billion in a Week: What’s Driving the Boom?
+                  </h3>
+                  <p className='blog-excerpt'>
+                    Dubai’s real estate sector recorded AED 25.9 billion ($7B) in weekly
+                    transactions, with $2.3B in a single day. Explore what’s fueling this surge from
+                    luxury deals to tokenized assets and global investor demand.
+                  </p>
+                  <Link
+                    href='https://aceeliteproperties.com/blogs/dubai-real-estate-hits-7-billion-in-a-week-whats-driving-the-boom'
+                    className='blog-read-more'
+                  >
+                    Read More
+                    <FontAwesomeIcon icon={faArrowRight} className='blog-icon' />
+                  </Link>
+                </div>
+              </div>
+
+              <div className='blog-card'>
+                <div className='blog-image'>
                   <Image
                     src='/images/properties/one-canal.jpg'
-                    alt='One Canal, Omniyat'
+                    alt='Luxury Penthouses Investment Guide'
                     width={400}
                     height={300}
                   />
+                  <div className='blog-category'>Investment Guide</div>
                 </div>
-                <div className='location-content'>
-                  <h3 className='location-title'>One Canal, Omniyat</h3>
-                  <p className='location-description'>
-                    Limited-edition penthouses with Burj Khalifa view
+                <div className='blog-content'>
+                  <div className='blog-meta'>
+                    <span className='blog-date'>02 Jul, 2025</span>
+                    <span className='blog-read-time'>7 min read</span>
+                  </div>
+                  <h3 className='blog-title-card'>Why Invest in Dubai Real Estate?</h3>
+                  <p className='blog-excerpt'>
+                    Discover why global investors choose Dubai: tax-free income, high rental yields,
+                    and future-ready infrastructure. Start building your real estate portfolio
+                    today.
                   </p>
-                  <button
-                    className='enroll-button'
-                    onClick={() => handleViewDetails('One Canal, Omniyat')}
+                  <Link
+                    href='https://aceeliteproperties.com/blogs/why-invest-in-dubai-real-estate'
+                    className='blog-read-more'
                   >
-                    View Details
-                    <FontAwesomeIcon icon={faArrowRight} className='enroll-icon' />
-                  </button>
+                    Read More
+                    <FontAwesomeIcon icon={faArrowRight} className='blog-icon' />
+                  </Link>
                 </div>
               </div>
 
-              <div className='location-card'>
-                <div className='location-image'>
+              <div className='blog-card'>
+                <div className='blog-image'>
                   <Image
                     src='/images/properties/the-valley.webp'
-                    alt='The Valley Villas, Emaar South'
+                    alt='Emaar Properties Investment Strategy'
                     width={400}
                     height={300}
                   />
+                  <div className='blog-category'>Developer Focus</div>
                 </div>
-                <div className='location-content'>
-                  <h3 className='location-title'>The Valley Villas, Emaar South</h3>
-                  <p className='location-description'>
-                    Modern family homes with post-handover plan
+                <div className='blog-content'>
+                  <div className='blog-meta'>
+                    <span className='blog-date'>28 Jul, 2025</span>
+                    <span className='blog-read-time'>6 min read</span>
+                  </div>
+                  <h3 className='blog-title-card'>
+                    Dubai Real Estate Market vs. Geopolitical Situation
+                  </h3>
+                  <p className='blog-excerpt'>
+                    In a world constantly shaped by political and economic shifts, investors are
+                    always on the lookout for safe, stable, and high-performing markets. Among the
+                    few that consistently shine through uncertainty is Dubai&apos;s real estate
+                    market &apos;4 a standout performer that not only weathers geopolitical storms
+                    but often a standout performer that not only weathers geopolitical storms but
+                    often thrives because of them.
                   </p>
-                  <button
-                    className='enroll-button'
-                    onClick={() => handleViewDetails('The Valley Villas, Emaar South')}
+                  <Link
+                    href='https://aceeliteproperties.com/blogs/dubai-real-estate-market-vs-geopolitical-situation'
+                    className='blog-read-more'
                   >
-                    View Details
-                    <FontAwesomeIcon icon={faArrowRight} className='enroll-icon' />
-                  </button>
-                </div>
-              </div>
-
-              <div className='location-card'>
-                <div className='location-image'>
-                  <Image
-                    src='/images/properties/binghatti.webp'
-                    alt='Binghatti Onyx, JVC'
-                    width={400}
-                    height={300}
-                  />
-                </div>
-                <div className='location-content'>
-                  <h3 className='location-title'>Binghatti Onyx, JVC</h3>
-                  <p className='location-description'>Boutique design with high ROI</p>
-                  <button
-                    className='enroll-button'
-                    onClick={() => handleViewDetails('Binghatti Onyx, JVC')}
-                  >
-                    View Details
-                    <FontAwesomeIcon icon={faArrowRight} className='enroll-icon' />
-                  </button>
-                </div>
-              </div>
-
-              <div className='location-card'>
-                <div className='location-image'>
-                  <Image
-                    src='/images/properties/cavali.jpg'
-                    alt='Ellington Ocean House'
-                    width={400}
-                    height={300}
-                  />
-                </div>
-                <div className='location-content'>
-                  <h3 className='location-title'>Ellington Ocean House</h3>
-                  <p className='location-description'>Resort-style beachfront luxury</p>
-                  <button
-                    className='enroll-button'
-                    onClick={() => handleViewDetails('Ellington Ocean House')}
-                  >
-                    View Details
-                    <FontAwesomeIcon icon={faArrowRight} className='enroll-icon' />
-                  </button>
+                    Read More
+                    <FontAwesomeIcon icon={faArrowRight} className='blog-icon' />
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* FAQ Section */}
-          <div className='faq-section animate-section' id='faqs'>
-            <h2>FAQ&apos;s</h2>
-            <div className='faq-container'>
-              <div
-                ref={el => {
-                  faqItemsRef.current[0] = el;
-                }}
-                className='faq-item active'
-              >
-                <div className='faq-question' onClick={() => handleFaqClick(0)}>
-                  <h4>What&apos;s the Rishi Malik progress like?</h4>
-                  <button className='faq-toggle'>
-                    <FontAwesomeIcon icon={faMinus} />
-                  </button>
-                </div>
-                <div className='faq-answer'>
-                  <p>
-                    I specialize in luxury real estate, property investment, and premium property
-                    management for individuals and businesses in Dubai.
-                  </p>
-                </div>
-              </div>
-
-              <div
-                ref={el => {
-                  faqItemsRef.current[1] = el;
-                }}
-                className='faq-item'
-              >
-                <div className='faq-question' onClick={() => handleFaqClick(1)}>
-                  <h4>Property delivery time estimate?</h4>
-                  <button className='faq-toggle'>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
-                </div>
-                <div className='faq-answer'>
-                  <p>
-                    Property handover typically takes 2-4 weeks after final payment, depending on
-                    the developer and property type.
-                  </p>
-                </div>
-              </div>
-
-              <div
-                ref={el => {
-                  faqItemsRef.current[2] = el;
-                }}
-                className='faq-item'
-              >
-                <div className='faq-question' onClick={() => handleFaqClick(2)}>
-                  <h4>What services do you offer?</h4>
-                  <button className='faq-toggle'>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
-                </div>
-                <div className='faq-answer'>
-                  <p>
-                    I offer luxury property sales, investment consulting, property management, and
-                    real estate portfolio optimization.
-                  </p>
-                </div>
-              </div>
-
-              <div
-                ref={el => {
-                  faqItemsRef.current[3] = el;
-                }}
-                className='faq-item'
-              >
-                <div className='faq-question' onClick={() => handleFaqClick(3)}>
-                  <h4>What if I don&apos;t like the property?</h4>
-                  <button className='faq-toggle'>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
-                </div>
-                <div className='faq-answer'>
-                  <p>
-                    We offer a 7-day viewing period and can arrange alternative properties that
-                    better match your requirements.
-                  </p>
-                </div>
-              </div>
-
-              <div
-                ref={el => {
-                  faqItemsRef.current[4] = el;
-                }}
-                className='faq-item'
-              >
-                <div className='faq-question' onClick={() => handleFaqClick(4)}>
-                  <h4>Are there any refunds?</h4>
-                  <button className='faq-toggle'>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
-                </div>
-                <div className='faq-answer'>
-                  <p>
-                    Refunds are available within 14 days of purchase, subject to our terms and
-                    conditions.
-                  </p>
-                </div>
-              </div>
-
-              <div className='faq-bottom'>
-                <p>Do you have any other questions?</p>
-                <a href='#contact' className='faq-link'>
-                  Ask me directly
-                </a>
-              </div>
-            </div>
-          </div>
           {/* Contact Section */}
           <div className='contact-section animate-section' id='contact'>
             <div className='contact-form-card'>
               <h2 className='contact-title'>
                 Contact For
                 <br />
-                Work
+                <span>Work</span>
               </h2>
-
-              <div className='form-group'>
-                <label htmlFor='fullName' className='form-label'>
-                  Full Name
-                </label>
-                <input
-                  type='text'
-                  id='fullName'
-                  placeholder='Enter your full name'
-                  className='form-input'
-                />
+              {/* Action Buttons */}
+              <div className='contact-action-buttons'>
+                <a
+                  href="https://wa.me/+971555266579?text=Hi%20Rishi%20Malik%2C%20I'm%20interested%20in%20one%20of%20your%20property%20listings.%20Could%20you%20please%20share%20more%20details%3F"
+                  aria-describedby='WhatsApp Contact'
+                >
+                  <button className='whatsapp-button'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        fillRule='evenodd'
+                        d='M19.2 4.8A10.2 10.2 0 0 0 3.2 17l-1.4 5.3L7.2 21a10.1 10.1 0 0 0 4.8 1 10.2 10.2 0 0 0 7.2-17.3zM12 20.4a8.4 8.4 0 0 1-4.3-1.2h-.3l-3.2.7 1-3.1-.3-.3a8.4 8.4 0 1 1 7.1 4zm4.7-6.3c-.3-.1-1.5-.8-1.8-.8s-.4-.2-.5 0l-.8 1c-.1 0-.3.3-.6.2a7 7 0 0 1-2-1.3 7.7 7.7 0 0 1-1.4-1.8c-.2-.2 0-.4 0-.5l.5-.4a1.7 1.7 0 0 0 .2-.5.5.5 0 0 0 0-.4l-.8-2c-.2-.4-.4-.3-.6-.3h-.4a1 1 0 0 0-.7.3 2.9 2.9 0 0 0-1 2A5 5 0 0 0 8 12.4a11.3 11.3 0 0 0 4.4 4 14.5 14.5 0 0 0 1.4.4 3.4 3.4 0 0 0 1.6 0 2.6 2.6 0 0 0 1.7-1 2.1 2.1 0 0 0 .2-1.3l-.5-.3z'
+                      ></path>
+                    </svg>
+                    WhatsApp
+                  </button>
+                </a>
+                <a href='tel:+971555266579' aria-describedby='Call Now'>
+                  <button className='call-now-button'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 16 16'
+                    >
+                      <path d='M13.3 10.3A7.6 7.6 0 0 1 11 10a.7.7 0 0 0-.7.1l-1 1.4a10.1 10.1 0 0 1-4.6-4.6L6 5.7A.7.7 0 0 0 6 5a7.4 7.4 0 0 1-.3-2.3A.7.7 0 0 0 5 2H2.8c-.4 0-.8.2-.8.7A11.4 11.4 0 0 0 13.3 14a.7.7 0 0 0 .7-.8V11a.7.7 0 0 0-.7-.6z'></path>
+                    </svg>
+                    Call Now
+                  </button>
+                </a>
               </div>
 
-              <div className='form-group'>
-                <label htmlFor='whatsapp' className='form-label'>
-                  WhatsApp Number
-                </label>
-                <input
-                  type='tel'
-                  id='whatsapp'
-                  placeholder='Enter your WhatsApp number'
-                  className='form-input'
-                />
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor='email' className='form-label'>
-                  Email Address
-                </label>
-                <input
-                  type='email'
-                  id='email'
-                  placeholder='Enter your email address'
-                  className='form-input'
-                />
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor='country' className='form-label'>
-                  Country of Residence
-                </label>
-                <input
-                  type='text'
-                  id='country'
-                  placeholder='Enter your country of residence'
-                  className='form-input'
-                />
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor='propertyType' className='form-label'>
-                  Property Type
-                </label>
-                <select id='propertyType' className='form-select'>
-                  <option value=''>Select property type</option>
-                  <option value='villa'>Villa</option>
-                  <option value='apartment'>Apartment</option>
-                  <option value='penthouse'>Penthouse</option>
-                  <option value='townhouse'>Townhouse</option>
-                  <option value='duplex'>Duplex</option>
-                  <option value='studio'>Studio</option>
-                  <option value='commercial'>Commercial</option>
-                  <option value='land'>Land</option>
-                </select>
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor='message' className='form-label'>
-                  Message
-                </label>
-                <textarea
-                  id='message'
-                  placeholder='Tell us about your property requirements'
-                  className='form-input form-textarea'
-                  rows={3}
-                ></textarea>
-              </div>
-
-              <div className='budget-selection'>
-                <div className='budget-options'>
-                  <button className='budget-button'>&lt; $1,000</button>
-                  <button className='budget-button'>$1,000 - $5,000</button>
-                  <button className='budget-button'>$5,000 - $10,000</button>
-                  <button className='budget-button'>$10,000 - $20,000</button>
-                  <button className='budget-button'>&gt; $20,000</button>
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className='form-status success'>
+                  <p>
+                    Thank you! Your message has been sent successfully. We&apos;ll get back to you
+                    soon.
+                  </p>
                 </div>
-              </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className='form-status error'>
+                  <p>
+                    Sorry, there was an error sending your message. Please try again or contact us
+                    directly.
+                  </p>
+                </div>
+              )}
 
-              <button className='get-started-button'>
-                Get Started
-                <FontAwesomeIcon icon={faArrowRight} className='get-started-icon' />
-              </button>
+              <form onSubmit={handleSubmit}>
+                {/* Row 1: Full Name */}
+                <div className='form-group'>
+                  <label htmlFor='fullName' className='form-label'>
+                    Full Name
+                  </label>
+                  <input
+                    type='text'
+                    id='fullName'
+                    name='name'
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder='Enter your full name'
+                    className='form-input'
+                    required
+                  />
+                </div>
+
+                {/* Row 2: Phone Number and Email */}
+                <div className='form-row'>
+                  <div className='form-group'>
+                    <label htmlFor='phone' className='form-label'>
+                      Phone Number
+                    </label>
+                    <input
+                      type='tel'
+                      id='phone'
+                      name='phone'
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder='Enter your phone number'
+                      className='form-input'
+                      required
+                    />
+                  </div>
+                  <div className='form-group'>
+                    <label htmlFor='email' className='form-label'>
+                      Email Address
+                    </label>
+                    <input
+                      type='email'
+                      id='email'
+                      name='email'
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder='Enter your email address'
+                      className='form-input'
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Row 3: Tell us your requirement */}
+                <div className='form-group'>
+                  <label htmlFor='message' className='form-label'>
+                    Tell us your requirement
+                  </label>
+                  <textarea
+                    id='message'
+                    name='message'
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder='Tell us about your property requirements'
+                    className='form-input form-textarea'
+                    rows={3}
+                    required
+                  ></textarea>
+                </div>
+
+                {/* Submit Button */}
+                <div className='form-submit'>
+                  <button type='submit' className='submit-button' disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    <FontAwesomeIcon icon={faArrowRight} className='submit-icon' />
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -953,20 +1318,38 @@ export default function Home() {
         </li>
         <li>
           <button
+            className={`scroll-to ${activeSection === 'insights' ? 'active' : ''}`}
+            onClick={() => scrollToSection('insights')}
+          >
+            <FontAwesomeIcon icon={faNewspaper} />
+            <span className='tooltip text-body-3'>Insights</span>
+          </button>
+        </li>
+        <li>
+          <button
+            className={`scroll-to ${activeSection === 'testimonials' ? 'active' : ''}`}
+            onClick={() => scrollToSection('testimonials')}
+          >
+            <FontAwesomeIcon icon={faCommentAlt} />
+            <span className='tooltip text-body-3'>Testimonials</span>
+          </button>
+        </li>
+        <li>
+          <button
+            className={`scroll-to ${activeSection === 'blog' ? 'active' : ''}`}
+            onClick={() => scrollToSection('blog')}
+          >
+            <FontAwesomeIcon icon={faNewspaper} />
+            <span className='tooltip text-body-3'>Blog</span>
+          </button>
+        </li>
+        <li>
+          <button
             className={`scroll-to ${activeSection === 'locations' ? 'active' : ''}`}
             onClick={() => scrollToSection('locations')}
           >
             <FontAwesomeIcon icon={faStream} />
             <span className='tooltip text-body-3'>Properties</span>
-          </button>
-        </li>
-        <li>
-          <button
-            className={`scroll-to ${activeSection === 'faqs' ? 'active' : ''}`}
-            onClick={() => scrollToSection('faqs')}
-          >
-            <FontAwesomeIcon icon={faCommentAlt} />
-            <span className='tooltip text-body-3'>FAQs</span>
           </button>
         </li>
         <li>
@@ -991,6 +1374,7 @@ export default function Home() {
               </button>
             </div>
             <div className='modal-content'>
+              {/* Row 1: Full Name */}
               <div className='form-group'>
                 <label htmlFor='modal-fullName' className='form-label'>
                   Full Name
@@ -1003,62 +1387,36 @@ export default function Home() {
                 />
               </div>
 
-              <div className='form-group'>
-                <label htmlFor='modal-whatsapp' className='form-label'>
-                  WhatsApp Number
-                </label>
-                <input
-                  type='tel'
-                  id='modal-whatsapp'
-                  placeholder='Enter your WhatsApp number'
-                  className='form-input'
-                />
+              {/* Row 2: Phone Number and Email */}
+              <div className='form-row'>
+                <div className='form-group'>
+                  <label htmlFor='modal-phone' className='form-label'>
+                    Phone Number
+                  </label>
+                  <input
+                    type='tel'
+                    id='modal-phone'
+                    placeholder='Enter your phone number'
+                    className='form-input'
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='modal-email' className='form-label'>
+                    Email Address
+                  </label>
+                  <input
+                    type='email'
+                    id='modal-email'
+                    placeholder='Enter your email address'
+                    className='form-input'
+                  />
+                </div>
               </div>
 
-              <div className='form-group'>
-                <label htmlFor='modal-email' className='form-label'>
-                  Email Address
-                </label>
-                <input
-                  type='email'
-                  id='modal-email'
-                  placeholder='Enter your email address'
-                  className='form-input'
-                />
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor='modal-country' className='form-label'>
-                  Country of Residence
-                </label>
-                <input
-                  type='text'
-                  id='modal-country'
-                  placeholder='Enter your country of residence'
-                  className='form-input'
-                />
-              </div>
-
-              <div className='form-group'>
-                <label htmlFor='modal-propertyType' className='form-label'>
-                  Property Type
-                </label>
-                <select id='modal-propertyType' className='form-select'>
-                  <option value=''>Select property type</option>
-                  <option value='villa'>Villa</option>
-                  <option value='apartment'>Apartment</option>
-                  <option value='penthouse'>Penthouse</option>
-                  <option value='townhouse'>Townhouse</option>
-                  <option value='duplex'>Duplex</option>
-                  <option value='studio'>Studio</option>
-                  <option value='commercial'>Commercial</option>
-                  <option value='land'>Land</option>
-                </select>
-              </div>
-
+              {/* Row 3: Tell us your requirement */}
               <div className='form-group'>
                 <label htmlFor='modal-message' className='form-label'>
-                  Message
+                  Tell us your requirement
                 </label>
                 <textarea
                   id='modal-message'
@@ -1068,20 +1426,45 @@ export default function Home() {
                 ></textarea>
               </div>
 
-              <div className='budget-selection'>
-                <div className='budget-options'>
-                  <button className='budget-button'>&lt; $1,000</button>
-                  <button className='budget-button'>$1,000 - $5,000</button>
-                  <button className='budget-button'>$5,000 - $10,000</button>
-                  <button className='budget-button'>$10,000 - $20,000</button>
-                  <button className='budget-button'>&gt; $20,000</button>
-                </div>
+              {/* Action Buttons */}
+              <div className='contact-action-buttons'>
+                <a
+                  href="https://wa.me/+971555266579?text=Hi%20Rishi%20Malik%2C%20I'm%20interested%20in%20one%20of%20your%20property%20listings.%20Could%20you%20please%20share%20more%20details%3F"
+                  aria-describedby='WhatsApp Contact'
+                >
+                  <button className='whatsapp-button'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        fillRule='evenodd'
+                        d='M19.2 4.8A10.2 10.2 0 0 0 3.2 17l-1.4 5.3L7.2 21a10.1 10.1 0 0 0 4.8 1 10.2 10.2 0 0 0 7.2-17.3zM12 20.4a8.4 8.4 0 0 1-4.3-1.2h-.3l-3.2.7 1-3.1-.3-.3a8.4 8.4 0 1 1 7.1 4zm4.7-6.3c-.3-.1-1.5-.8-1.8-.8s-.4-.2-.5 0l-.8 1c-.1 0-.3.3-.6.2a7 7 0 0 1-2-1.3 7.7 7.7 0 0 1-1.4-1.8c-.2-.2 0-.4 0-.5l.5-.4a1.7 1.7 0 0 0 .2-.5.5.5 0 0 0 0-.4l-.8-2c-.2-.4-.4-.3-.6-.3h-.4a1 1 0 0 0-.7.3 2.9 2.9 0 0 0-1 2A5 5 0 0 0 8 12.4a11.3 11.3 0 0 0 4.4 4 14.5 14.5 0 0 0 1.4.4 3.4 3.4 0 0 0 1.6 0 2.6 2.6 0 0 0 1.7-1 2.1 2.1 0 0 0 .2-1.3l-.5-.3z'
+                      ></path>
+                    </svg>
+                    WhatsApp
+                  </button>
+                </a>
+                <a href='tel:+971555266579' aria-describedby='Call Now'>
+                  <button className='call-now-button'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='16'
+                      height='16'
+                      viewBox='0 0 16 16'
+                    >
+                      <path d='M13.3 10.3A7.6 7.6 0 0 1 11 10a.7.7 0 0 0-.7.1l-1 1.4a10.1 10.1 0 0 1-4.6-4.6L6 5.7A.7.7 0 0 0 6 5a7.4 7.4 0 0 1-.3-2.3A.7.7 0 0 0 5 2H2.8c-.4 0-.8.2-.8.7A11.4 11.4 0 0 0 13.3 14a.7.7 0 0 0 .7-.8V11a.7.7 0 0 0-.7-.6z'></path>
+                    </svg>
+                    Call Now
+                  </button>
+                </a>
+                <button className='get-started-button'>
+                  Get Started
+                  <FontAwesomeIcon icon={faArrowRight} className='get-started-icon' />
+                </button>
               </div>
-
-              <button className='get-started-button'>
-                Get Started
-                <FontAwesomeIcon icon={faArrowRight} className='get-started-icon' />
-              </button>
             </div>
           </div>
         </div>
