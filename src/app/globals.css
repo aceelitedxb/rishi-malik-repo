@@ -86,7 +86,7 @@ body {
 .banner-section {
   position: relative;
   width: 100%;
-  /* Removed height: 100vh to allow natural height */
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,7 +94,7 @@ body {
 }
 
 .banner-background {
-  position: static !important;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -152,7 +152,23 @@ body {
 }
 
 /* Responsive Banner */
+@media (min-width: 1500px) {
+  .banner-section {
+    height: 500px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .banner-section {
+    height: 600px;
+  }
+}
+
 @media (max-width: 768px) {
+  .banner-section {
+    height: 300px;
+  }
+
   .banner-text {
     padding: 40px 20px;
   }
@@ -991,15 +1007,15 @@ nav {
   backdrop-filter: blur(36px);
   border-radius: 24px;
   padding: 60px;
-  max-width: 600px;
+  max-width: 100%;
   width: 90%;
   box-shadow: 0px 0px 20px 0px rgba(103, 103, 103, 0.25) inset;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .contact-title {
-  font-size: 40px;
-  line-height: 1.2;
+  font-size: 36px;
+  line-height: 1.4;
   color: #fff;
   margin-bottom: 40px;
   text-align: left;
@@ -1011,11 +1027,11 @@ nav {
 
 .form-label {
   font-family: 'Poppins', sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 500;
   color: #fff;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .form-input {
@@ -1026,7 +1042,7 @@ nav {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   outline: none;
   transition: border-color 0.3s ease;
 }
@@ -1311,7 +1327,7 @@ nav {
   padding-right: 40px;
 }
 .main-title .title {
-  margin-bottom: 0;
+  margin-bottom: 20px;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   font-style: normal;
@@ -1336,17 +1352,31 @@ nav {
   margin-bottom: 84px;
 }
 .hero-content .list-tags {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 24px;
+}
+.hero-content .list-tags a strong {
+  font-size: 52px;
+  line-height: 1;
+  padding-bottom: 8px;
 }
 .hero-content .list-tags a {
   display: flex;
   align-items: center;
-  padding: 5px 24px;
-  border-radius: 99px;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  border-radius: 6px;
   background: rgba(37, 37, 37, 0.5019607843);
+}
+.hero-content .list-tags a span {
+  max-width: 140px;
+  font-size: 15px;
+  line-height: 1.4;
 }
 
 /* about section */
@@ -1421,18 +1451,32 @@ nav {
   border: 1px solid rgba(255, 255, 255, 0.05);
   animation: slideIn 0.3s ease;
 }
+.contact-modal .form-group {
+  margin-bottom: 20px;
+}
+.contact-modal .buttons {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 0;
+}
+.contac-modal .whatsapp-button,
+.contac-modal .call-now-button {
+  padding: 9px 18px;
+}
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 32px;
+  padding: 12px 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-title {
   font-family: 'Poppins', sans-serif;
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 600;
   color: #fff;
   margin: 0;
@@ -1462,6 +1506,13 @@ nav {
 
 .modal-content {
   padding: 32px;
+}
+.contact-modal .contact-action-buttons {
+  margin-bottom: 0;
+}
+.contact-modal .submit-button {
+  text-align: right;
+  margin-left: auto;
 }
 
 @keyframes fadeIn {
@@ -2008,14 +2059,14 @@ nav {
 .form-submit {
   margin-top: 24px;
   display: flex;
-  justify-content: center;
+  justify-content: end;
 }
 
 .submit-button {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 32px;
+  padding: 10px 20px;
   background: linear-gradient(135deg, #d4af37 0%, #f7e7ce 100%);
   color: #0a0a0a;
   border: none;
@@ -2140,11 +2191,14 @@ h6 span,
 
 .insight-image {
   height: 200px;
-  background: #666666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
+  overflow: hidden;
+}
+
+.insight-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .insight-placeholder {
@@ -2631,7 +2685,7 @@ h6 span,
   /* Banner Section Mobile - Natural height */
 
   .banner-background {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -2839,7 +2893,7 @@ h6 span,
   .banner-image {
     height: auto !important;
     width: auto !important;
-    position: static !important;
+    position: relative !important;
   }
 }
 
@@ -2916,7 +2970,7 @@ h6 span,
 
   /* Additional Banner Mobile Optimizations */
   .banner-background {
-    position: static !important;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;

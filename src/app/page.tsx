@@ -86,9 +86,12 @@ export default function Home() {
       if (response.ok && result.success) {
         setSubmitStatus('success');
         setFormData({ name: '', phone: '', email: '', message: '' });
-        // Close modal if it's open
+        // Close modal after showing success message
         if (isContactModalOpen) {
-          closeContactModal();
+          setTimeout(() => {
+            closeContactModal();
+            setSubmitStatus('idle');
+          }, 2000);
         }
       } else {
         setSubmitStatus('error');
@@ -435,9 +438,6 @@ export default function Home() {
         <div className='container'>
           <div className='hero-content'>
             <div className='main-title'>
-              <div className='text-body-1 dot-before subtitle'>
-                ✨ Dubai&apos;s #1 Luxury Expert
-              </div>
               <h1 className='title split-text effect-right'>
                 ABOUT MR. <span>RISHI MALIK</span>
               </h1>
@@ -452,18 +452,20 @@ export default function Home() {
             <ul className='list-tags'>
               <li>
                 <a className='text-body-2' href='#'>
-                  <strong style={{ marginRight: '12px' }}>30 </strong> Global Real Estate Exclusives
+                  <strong style={{ marginRight: '12px' }}>30 </strong>
+                  <span>Global Real Estate Exclusives</span>
                 </a>
               </li>
               <li>
                 <a className='text-body-2' href='#'>
-                  <strong style={{ marginRight: '12px' }}>25+ </strong> Countries Trusted by Global
-                  Investors
+                  <strong style={{ marginRight: '12px' }}>25+ </strong>
+                  <span> Countries Trusted by Global </span>
                 </a>
               </li>
               <li>
                 <a className='text-body-2' href='#'>
-                  <strong style={{ marginRight: '12px' }}>132+</strong> UHN Clients Served Globally
+                  <strong style={{ marginRight: '12px' }}>132+</strong>
+                  <span>UHN Clients Served Globally</span>
                 </a>
               </li>
             </ul>
@@ -734,37 +736,64 @@ export default function Home() {
             <div className='insights-grid'>
               <div className='insight-card'>
                 <div className='insight-image'>
-                  <div className='insight-placeholder'>
-                    <span>Weekly Insight</span>
-                  </div>
+                  <Image
+                    src='/images/weekly-insights.jpeg'
+                    alt='Weekly Insight'
+                    width={400}
+                    height={200}
+                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  />
                 </div>
                 <div className='insight-content'>
                   <h3 className='insight-title'>WEEKLY INSIGHT</h3>
-                  <button className='download-button'>DOWNLOAD</button>
+                  <button
+                    className='download-button'
+                    onClick={() => handleViewDetails('Weekly Insight')}
+                  >
+                    DOWNLOAD
+                  </button>
                 </div>
               </div>
 
               <div className='insight-card'>
                 <div className='insight-image'>
-                  <div className='insight-placeholder'>
-                    <span>Weekly Insight</span>
-                  </div>
+                  <Image
+                    src='/images/weekly-insights.jpeg'
+                    alt='Weekly Insight'
+                    width={400}
+                    height={200}
+                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  />
                 </div>
                 <div className='insight-content'>
                   <h3 className='insight-title'>WEEKLY INSIGHT</h3>
-                  <button className='download-button'>DOWNLOAD</button>
+                  <button
+                    className='download-button'
+                    onClick={() => handleViewDetails('Weekly Insight')}
+                  >
+                    DOWNLOAD
+                  </button>
                 </div>
               </div>
 
               <div className='insight-card'>
                 <div className='insight-image'>
-                  <div className='insight-placeholder'>
-                    <span>Weekly Insight</span>
-                  </div>
+                  <Image
+                    src='/images/weekly-insights.jpeg'
+                    alt='Weekly Insight'
+                    width={400}
+                    height={200}
+                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  />
                 </div>
                 <div className='insight-content'>
                   <h3 className='insight-title'>WEEKLY INSIGHT</h3>
-                  <button className='download-button'>DOWNLOAD</button>
+                  <button
+                    className='download-button'
+                    onClick={() => handleViewDetails('Weekly Insight')}
+                  >
+                    DOWNLOAD
+                  </button>
                 </div>
               </div>
             </div>
@@ -1153,9 +1182,9 @@ export default function Home() {
           <div className='contact-section animate-section' id='contact'>
             <div className='contact-form-card'>
               <h2 className='contact-title'>
-                Contact For
+                Book Your 1 ON 1 Consultation
                 <br />
-                <span>Work</span>
+                <span>With Mr Rishi Malik</span>
               </h2>
               {/* Action Buttons */}
               <div className='contact-action-buttons'>
@@ -1373,7 +1402,60 @@ export default function Home() {
                 ×
               </button>
             </div>
-            <div className='modal-content'>
+
+            <div className='buttons'>
+              <a
+                href="https://wa.me/+971555266579?text=Hi%20Rishi%20Malik%2C%20I'm%20interested%20in%20one%20of%20your%20property%20listings.%20Could%20you%20please%20share%20more%20details%3F"
+                aria-describedby='WhatsApp Contact'
+              >
+                <button className='whatsapp-button'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='16'
+                    height='16'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M19.2 4.8A10.2 10.2 0 0 0 3.2 17l-1.4 5.3L7.2 21a10.1 10.1 0 0 0 4.8 1 10.2 10.2 0 0 0 7.2-17.3zM12 20.4a8.4 8.4 0 0 1-4.3-1.2h-.3l-3.2.7 1-3.1-.3-.3a8.4 8.4 0 1 1 7.1 4zm4.7-6.3c-.3-.1-1.5-.8-1.8-.8s-.4-.2-.5 0l-.8 1c-.1 0-.3.3-.6.2a7 7 0 0 1-2-1.3 7.7 7.7 0 0 1-1.4-1.8c-.2-.2 0-.4 0-.5l.5-.4a1.7 1.7 0 0 0 .2-.5.5.5 0 0 0 0-.4l-.8-2c-.2-.4-.4-.3-.6-.3h-.4a1 1 0 0 0-.7.3 2.9 2.9 0 0 0-1 2A5 5 0 0 0 8 12.4a11.3 11.3 0 0 0 4.4 4 14.5 14.5 0 0 0 1.4.4 3.4 3.4 0 0 0 1.6 0 2.6 2.6 0 0 0 1.7-1 2.1 2.1 0 0 0 .2-1.3l-.5-.3z'
+                    ></path>
+                  </svg>
+                  WhatsApp
+                </button>
+              </a>
+              <a href='tel:+971555266579' aria-describedby='Call Now'>
+                <button className='call-now-button'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='16'
+                    height='16'
+                    viewBox='0 0 16 16'
+                  >
+                    <path d='M13.3 10.3A7.6 7.6 0 0 1 11 10a.7.7 0 0 0-.7.1l-1 1.4a10.1 10.1 0 0 1-4.6-4.6L6 5.7A.7.7 0 0 0 6 5a7.4 7.4 0 0 1-.3-2.3A.7.7 0 0 0 5 2H2.8c-.4 0-.8.2-.8.7A11.4 11.4 0 0 0 13.3 14a.7.7 0 0 0 .7-.8V11a.7.7 0 0 0-.7-.6z'></path>
+                  </svg>
+                  Call Now
+                </button>
+              </a>
+            </div>
+            <form onSubmit={handleSubmit} className='modal-content'>
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className='form-status success'>
+                  <p>
+                    Thank you! Your message has been sent successfully. We&apos;ll get back to you
+                    soon.
+                  </p>
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className='form-status error'>
+                  <p>
+                    Sorry, there was an error sending your message. Please try again or contact us
+                    directly.
+                  </p>
+                </div>
+              )}
+
               {/* Row 1: Full Name */}
               <div className='form-group'>
                 <label htmlFor='modal-fullName' className='form-label'>
@@ -1382,8 +1464,12 @@ export default function Home() {
                 <input
                   type='text'
                   id='modal-fullName'
+                  name='name'
                   placeholder='Enter your full name'
                   className='form-input'
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
                 />
               </div>
 
@@ -1396,8 +1482,12 @@ export default function Home() {
                   <input
                     type='tel'
                     id='modal-phone'
+                    name='phone'
                     placeholder='Enter your phone number'
                     className='form-input'
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
                   />
                 </div>
                 <div className='form-group'>
@@ -1407,8 +1497,12 @@ export default function Home() {
                   <input
                     type='email'
                     id='modal-email'
+                    name='email'
                     placeholder='Enter your email address'
                     className='form-input'
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
                   />
                 </div>
               </div>
@@ -1420,52 +1514,24 @@ export default function Home() {
                 </label>
                 <textarea
                   id='modal-message'
+                  name='message'
                   placeholder='Tell us about your property requirements'
                   className='form-input form-textarea'
                   rows={3}
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
                 ></textarea>
               </div>
 
               {/* Action Buttons */}
               <div className='contact-action-buttons'>
-                <a
-                  href="https://wa.me/+971555266579?text=Hi%20Rishi%20Malik%2C%20I'm%20interested%20in%20one%20of%20your%20property%20listings.%20Could%20you%20please%20share%20more%20details%3F"
-                  aria-describedby='WhatsApp Contact'
-                >
-                  <button className='whatsapp-button'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      width='16'
-                      height='16'
-                      viewBox='0 0 24 24'
-                    >
-                      <path
-                        fillRule='evenodd'
-                        d='M19.2 4.8A10.2 10.2 0 0 0 3.2 17l-1.4 5.3L7.2 21a10.1 10.1 0 0 0 4.8 1 10.2 10.2 0 0 0 7.2-17.3zM12 20.4a8.4 8.4 0 0 1-4.3-1.2h-.3l-3.2.7 1-3.1-.3-.3a8.4 8.4 0 1 1 7.1 4zm4.7-6.3c-.3-.1-1.5-.8-1.8-.8s-.4-.2-.5 0l-.8 1c-.1 0-.3.3-.6.2a7 7 0 0 1-2-1.3 7.7 7.7 0 0 1-1.4-1.8c-.2-.2 0-.4 0-.5l.5-.4a1.7 1.7 0 0 0 .2-.5.5.5 0 0 0 0-.4l-.8-2c-.2-.4-.4-.3-.6-.3h-.4a1 1 0 0 0-.7.3 2.9 2.9 0 0 0-1 2A5 5 0 0 0 8 12.4a11.3 11.3 0 0 0 4.4 4 14.5 14.5 0 0 0 1.4.4 3.4 3.4 0 0 0 1.6 0 2.6 2.6 0 0 0 1.7-1 2.1 2.1 0 0 0 .2-1.3l-.5-.3z'
-                      ></path>
-                    </svg>
-                    WhatsApp
-                  </button>
-                </a>
-                <a href='tel:+971555266579' aria-describedby='Call Now'>
-                  <button className='call-now-button'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      width='16'
-                      height='16'
-                      viewBox='0 0 16 16'
-                    >
-                      <path d='M13.3 10.3A7.6 7.6 0 0 1 11 10a.7.7 0 0 0-.7.1l-1 1.4a10.1 10.1 0 0 1-4.6-4.6L6 5.7A.7.7 0 0 0 6 5a7.4 7.4 0 0 1-.3-2.3A.7.7 0 0 0 5 2H2.8c-.4 0-.8.2-.8.7A11.4 11.4 0 0 0 13.3 14a.7.7 0 0 0 .7-.8V11a.7.7 0 0 0-.7-.6z'></path>
-                    </svg>
-                    Call Now
-                  </button>
-                </a>
-                <button className='get-started-button'>
-                  Get Started
-                  <FontAwesomeIcon icon={faArrowRight} className='get-started-icon' />
+                <button type='submit' className='submit-button' disabled={isSubmitting}>
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  <FontAwesomeIcon icon={faArrowRight} className='submit-icon' />
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}
