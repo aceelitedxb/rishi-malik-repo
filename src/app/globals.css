@@ -2360,6 +2360,7 @@ h6 span,
     line-height: 1.1;
     word-break: break-word;
     hyphens: auto;
+    font-weight: 700;
   }
 
   .main-title .title span {
@@ -2554,6 +2555,7 @@ h6 span,
 
   .wrapper {
     padding: 0 10px;
+    gap: 10px;
   }
 
   .testimonial-card {
@@ -2894,8 +2896,9 @@ h6 span,
   .insights-title,
   .testimonials-title,
   .blog-title {
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1.4;
+    margin-bottom: 8px;
   }
 
   .location-content,
@@ -2911,6 +2914,7 @@ h6 span,
   .section-summary,
   .dev-header p {
     font-size: 15px;
+    margin-top: 8px;
   }
   .contact-title {
     font-size: 20px;
