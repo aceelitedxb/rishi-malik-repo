@@ -2336,9 +2336,9 @@ h6 span,
     padding-block: 0;
   }
   .hero-content .list-tags {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    max-width: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
   }
   .hero-content .list-tags li {
     width: max-content;
@@ -2348,6 +2348,7 @@ h6 span,
   }
   .hero-content .list-tags a {
     padding: 15px 24px;
+    min-width: 300px;
   }
   /* Hero Section Mobile */
   .hero-content {
