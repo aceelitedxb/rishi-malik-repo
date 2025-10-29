@@ -364,14 +364,49 @@ export default function Home() {
             </div>
           </div>
           <div className='infor'>
-            <h6 className='mail letter-spacing-0'>info@rishimalik.com</h6>
-            <div className='text-body-2 address'>Based in Dubai, UAE</div>
+            <h6 className='mail letter-spacing-0'>Mr. Rishi Malik</h6>
+            <div className='text-body-2 address'>Real Estate Expert</div>
           </div>
           <ul className='social-links justify-content-center'>
             <li>
               <a
+                href='https://www.instagram.com/aceeliteproperties/'
+                target='_blank'
+                aria-label='Instagram'
+              >
+                <svg
+                  fill='#fff'
+                  width='24'
+                  height='24'
+                  viewBox='-2 -2 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                  preserveAspectRatio='xMinYMin'
+                >
+                  <path d='M14.017 0h-8.07A5.954 5.954 0 0 0 0 5.948v8.07a5.954 5.954 0 0 0 5.948 5.947h8.07a5.954 5.954 0 0 0 5.947-5.948v-8.07A5.954 5.954 0 0 0 14.017 0zm3.94 14.017a3.94 3.94 0 0 1-3.94 3.94h-8.07a3.94 3.94 0 0 1-3.939-3.94v-8.07a3.94 3.94 0 0 1 3.94-3.939h8.07a3.94 3.94 0 0 1 3.939 3.94v8.07z'></path>
+                  <path d='M9.982 4.819A5.17 5.17 0 0 0 4.82 9.982a5.17 5.17 0 0 0 5.163 5.164 5.17 5.17 0 0 0 5.164-5.164A5.17 5.17 0 0 0 9.982 4.82zm0 8.319a3.155 3.155 0 1 1 0-6.31 3.155 3.155 0 0 1 0 6.31z'></path>
+                  <circle cx='15.156' cy='4.858' r='1.237'></circle>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href='https://www.youtube.com/' target='_blank' aria-label='YouTube'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='currentColor'
+                  aria-hidden='true'
+                >
+                  <path d='M23.5 6.2a3 3 0 0 0-2.1-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.7.6 9.4.6 9.4.6s7.7 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.8 15.5v-7L15.5 12l-5.7 3.5z' />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
                 href='https://www.facebook.com/people/Ace-Elite-Properties/61572930571115/'
                 target='_blank'
+                aria-label='Facebook'
               >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -391,45 +426,22 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a href='https://www.linkedin.com/company/ace-elite-properties/' target='_blank'>
+              <a href='https://twitter.com/' target='_blank' aria-label='Twitter'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
                   height='24'
                   viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  className='lucide lucide-linkedin'
+                  fill='currentColor'
                   aria-hidden='true'
                 >
-                  <path d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z'></path>
-                  <rect width='4' height='12' x='2' y='9'></rect>
-                  <circle cx='4' cy='4' r='2'></circle>
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href='https://www.instagram.com/aceeliteproperties/' target='_blank'>
-                <svg
-                  fill='#fff'
-                  width='24'
-                  height='24'
-                  viewBox='-2 -2 24 24'
-                  xmlns='http://www.w3.org/2000/svg'
-                  preserveAspectRatio='xMinYMin'
-                >
-                  <path d='M14.017 0h-8.07A5.954 5.954 0 0 0 0 5.948v8.07a5.954 5.954 0 0 0 5.948 5.947h8.07a5.954 5.954 0 0 0 5.947-5.948v-8.07A5.954 5.954 0 0 0 14.017 0zm3.94 14.017a3.94 3.94 0 0 1-3.94 3.94h-8.07a3.94 3.94 0 0 1-3.939-3.94v-8.07a3.94 3.94 0 0 1 3.94-3.939h8.07a3.94 3.94 0 0 1 3.939 3.94v8.07z'></path>
-                  <path d='M9.982 4.819A5.17 5.17 0 0 0 4.82 9.982a5.17 5.17 0 0 0 5.163 5.164 5.17 5.17 0 0 0 5.164-5.164A5.17 5.17 0 0 0 9.982 4.82zm0 8.319a3.155 3.155 0 1 1 0-6.31 3.155 3.155 0 0 1 0 6.31z'></path>
-                  <circle cx='15.156' cy='4.858' r='1.237'></circle>
+                  <path d='M22.46 6c-.77.35-1.6.58-2.46.69a4.14 4.14 0 0 0 1.82-2.28 8.2 8.2 0 0 1-2.6 1 4.11 4.11 0 0 0-7 3.75A11.67 11.67 0 0 1 3.15 4.6a4.1 4.1 0 0 0 1.27 5.48 4.07 4.07 0 0 1-1.86-.52v.05a4.11 4.11 0 0 0 3.3 4.03c-.45.12-.92.18-1.4.07a4.12 4.12 0 0 0 3.84 2.85A8.24 8.24 0 0 1 2 19.54a11.63 11.63 0 0 0 6.29 1.84c7.55 0 11.68-6.26 11.68-11.68 0-.18 0-.36-.01-.54A8.36 8.36 0 0 0 24 6.5c-.83.37-1.72.63-2.64.73z' />
                 </svg>
               </a>
             </li>
           </ul>
           <a href='#contact' className='bot-button'>
-            <div className='text-body-1 text'>Get Started</div>
+            <div className='text-body-1 text'>Contact Me</div>
             <div className='icon'>
               <FontAwesomeIcon icon={faArrowRight} />
             </div>
@@ -474,15 +486,9 @@ export default function Home() {
           {/* Prime Locations Section */}
           <div className='prime-locations-section animate-section' id='locations'>
             <div className='locations-header'>
-              <div className='text-body-1 dot-before subtitle'>• Properties</div>
               <h2 className='locations-title'>
                 BRANDED <span>LUXURY COLLECTION</span>
               </h2>
-              <p className='text-body-2 text'>
-                Explore a selection of ready, under-construction, and off-plan properties personally
-                chosen by Rishi Malik — focusing on investment growth, exclusivity, and lifestyle
-                value.
-              </p>
             </div>
             <div className='locations-grid'>
               <div className='location-card'>
@@ -630,15 +636,9 @@ export default function Home() {
           {/* Developers Slider */}
           <div className='developers-section animate-section' id='developers'>
             <div className='dev-header'>
-              <div className='text-body-1 dot-before subtitle'>• Developers</div>
               <h2 className='dev-title'>
                 PARTNERSHIP WITH <span>TOP DEVELOPERS</span>
               </h2>
-              <p className='text-body-2 text'>
-                Rishi Malik&apos;s long-standing partnerships with Dubai&apos;s top developers
-                ensure clients receive priority access, VIP invitations to new project launches, and
-                exclusive prices before public release.
-              </p>
             </div>
             <div className='dev-slider'>
               <button
@@ -723,15 +723,9 @@ export default function Home() {
           {/* Dubai Insights Section */}
           <div className='insights-section animate-section' id='insights'>
             <div className='insights-header'>
-              <div className='text-body-1 dot-before subtitle'>• Insights</div>
               <h2 className='insights-title'>
                 DUBAI INSIGHTS BY <span>RISHI MALIK</span>
               </h2>
-              <p className='text-body-2 text'>
-                Stay ahead of the market with Rishi&apos;s weekly insights, market analysis, and
-                exclusive updates on Dubai&apos;s luxury real estate trends and investment
-                opportunities.
-              </p>
             </div>
             <div className='insights-grid'>
               <div className='insight-card'>
@@ -802,14 +796,9 @@ export default function Home() {
           {/* Testimonials Section */}
           <div className='testimonials-section animate-section' id='testimonials'>
             <div className='testimonials-header'>
-              <div className='text-body-1 dot-before subtitle'>• Testimonials</div>
               <h2 className='testimonials-title'>
-                WHAT OUR <span>CLIENTS SAY</span>
+                TESTIMONIALS <span>BY INVESTORS</span>
               </h2>
-              <p className='text-body-2 text'>
-                Hear from our satisfied clients who have successfully invested in Dubai&apos;s
-                luxury real estate market through our expert guidance.
-              </p>
             </div>
 
             <button className='toggle' id='direction-toggle'>
@@ -1066,14 +1055,9 @@ export default function Home() {
           {/* Blog Section */}
           <div className='blog-section animate-section' id='blog'>
             <div className='blog-header'>
-              <div className='text-body-1 dot-before subtitle'>• Blog</div>
               <h2 className='blog-title'>
-                LATEST INSIGHTS & <span>MARKET UPDATES</span>
+                BLOGS BY <span>RISHI MALIK</span>
               </h2>
-              <p className='text-body-2 text'>
-                Stay informed with expert analysis, market trends, and investment opportunities in
-                Dubai&apos;s luxury real estate market.
-              </p>
             </div>
             <div className='blog-grid'>
               <div className='blog-card'>

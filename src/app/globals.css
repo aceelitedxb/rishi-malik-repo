@@ -151,13 +151,6 @@ body {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsive Banner */
-@media (min-width: 1500px) {
-  .banner-section {
-    height: 500px;
-  }
-}
-
 @media (min-width: 1920px) {
   .banner-section {
     height: 600px;
@@ -380,13 +373,14 @@ nav {
   width: 100%;
   border-radius: 16px;
   overflow: hidden;
+  max-height: 250px;
 }
 
 .avatar-wrap img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  max-height: 250px;
+  height: auto;
+  object-fit: contain;
+  max-height: none;
   object-position: top;
 }
 .left-sidebar .image .signature {
@@ -444,14 +438,14 @@ nav {
   padding: 3px 3px 3px 23px;
   border: 1px solid rgba(255, 255, 255, 0.1490196078);
   border-radius: 99px;
-  height: 56px;
+  height: 44px;
 }
 .left-sidebar .bot-button .icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   font-size: 18px;
   color: #111111;
   background-color: #fff;
@@ -639,7 +633,7 @@ nav {
 .dev-header {
   max-width: 960px;
   margin: 0 auto 80px auto;
-  padding: 0 24px;
+  padding: 0;
   text-align: center;
 }
 
@@ -826,16 +820,17 @@ nav {
 
 .locations-header {
   max-width: 960px;
-  margin: 0 auto 60px auto;
+  margin: 0;
+  text-align: left;
+  margin-bottom: 40px;
 }
 
 .locations-title {
   font-size: 40px;
-  max-width: 800px;
   font-weight: 600;
-  margin: 0 auto 20px auto;
-  margin-left: 0;
   line-height: 1;
+  margin-bottom: 20px;
+  text-align: left;
   margin-bottom: 20px;
 }
 
