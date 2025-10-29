@@ -579,7 +579,7 @@ nav {
 }
 
 .faq-answer p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
   line-height: 1.6;
   margin: 0;
@@ -594,7 +594,7 @@ nav {
 }
 
 .faq-bottom p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
   margin-bottom: 16px;
   font-family: 'Poppins', sans-serif;
@@ -648,7 +648,7 @@ nav {
   max-width: 900px;
   font-size: 18px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .dev-title {
@@ -840,7 +840,7 @@ nav {
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: 20px;
   max-width: 900px;
   text-align: left;
@@ -1345,7 +1345,7 @@ nav {
   margin-bottom: 29px;
 }
 .main-title .text {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.6);
   font-family: 'Poppins', sans-serif;
   font-weight: normal;
   font-style: normal;
@@ -2878,7 +2878,7 @@ h6 span,
   }
 
   .main-title .text {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.4;
   }
 
@@ -2913,7 +2913,7 @@ h6 span,
   }
   .section-summary,
   .dev-header p {
-    font-size: 15px;
+    font-size: 13px;
     margin-top: 8px;
   }
   .contact-title {
