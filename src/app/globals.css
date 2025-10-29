@@ -648,7 +648,7 @@ nav {
   max-width: 900px;
   font-size: 18px;
   line-height: 1.6;
-  color: var(--light-gray);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .dev-title {
@@ -1345,7 +1345,7 @@ nav {
   margin-bottom: 29px;
 }
 .main-title .text {
-  color: rgba(255, 255, 255, 0.6980392157);
+  color: rgba(255, 255, 255, 0.8);
   font-family: 'Poppins', sans-serif;
   font-weight: normal;
   font-style: normal;
@@ -2878,7 +2878,7 @@ h6 span,
   }
 
   .main-title .text {
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.4;
   }
 
