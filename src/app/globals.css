@@ -373,15 +373,21 @@ nav {
   width: 100%;
   border-radius: 16px;
   overflow: hidden;
-  max-height: 250px;
+  position: relative;
+  height: 320px;
 }
 
 .avatar-wrap img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
-  max-height: none;
-  object-position: top;
+  height: 100%;
+  object-fit: cover; /* crop to container */
+  object-position: center 20%; /* keep head/torso visible (above waist) */
+}
+
+/* Ensure Next.js fill image fits container */
+.avatar .avatar-bg {
+  object-fit: cover;
+  object-position: center 20%;
 }
 .left-sidebar .image .signature {
   width: 265px;
@@ -1356,10 +1362,12 @@ nav {
   gap: 24px;
 }
 .hero-content .list-tags a strong {
-  font-size: 52px;
+  font-size: 42px;
+  text-align: center;
   line-height: 1;
   padding-bottom: 8px;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  margin-right: 0 !important;
 }
 .hero-content .list-tags a {
   display: flex;
@@ -1377,7 +1385,7 @@ nav {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .hero-content .list-tags a span {
-  max-width: 140px;
+  max-width: 200px;
   font-size: 15px;
   line-height: 1.4;
 }

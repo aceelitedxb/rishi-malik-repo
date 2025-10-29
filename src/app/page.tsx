@@ -350,8 +350,10 @@ export default function Home() {
                 className='avatar-bg'
                 src='/images/rishi_malik.png'
                 alt='Avatar BG'
-                width={1000}
-                height={1000}
+                fill
+                priority
+                quality={100}
+                style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
               />
               <Image
                 className='avatar-no-bg'
@@ -472,20 +474,20 @@ export default function Home() {
             <ul className='list-tags'>
               <li>
                 <a className='text-body-2' href='#'>
-                  <strong style={{ marginRight: '12px' }}>30 </strong>
-                  <span>Global Real Estate Exclusives</span>
+                  <strong style={{ marginRight: '12px' }}>30 Years </strong>
+                  <span>Global Real Estate Exclances</span>
                 </a>
               </li>
               <li>
                 <a className='text-body-2' href='#'>
                   <strong style={{ marginRight: '12px' }}>25+ </strong>
-                  <span> Countries Trusted by Global </span>
+                  <span> Countries Trusted by Global Investors </span>
                 </a>
               </li>
               <li>
                 <a className='text-body-2' href='#'>
                   <strong style={{ marginRight: '12px' }}>132+</strong>
-                  <span>UHN Clients Served Globally</span>
+                  <span>UHNI Clients Served Globally</span>
                 </a>
               </li>
             </ul>
