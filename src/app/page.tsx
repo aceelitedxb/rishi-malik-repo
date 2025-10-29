@@ -350,8 +350,8 @@ export default function Home() {
                 className='avatar-bg'
                 src='/images/rishi_malik.png'
                 alt='Avatar BG'
-                width={357}
-                height={400}
+                width={1000}
+                height={1000}
               />
               <Image
                 className='avatar-no-bg'
@@ -440,8 +440,16 @@ export default function Home() {
               </a>
             </li>
           </ul>
-          <a href='#contact' className='bot-button'>
-            <div className='text-body-1 text'>Contact Me</div>
+          <a
+            href='#contact'
+            className='bot-button'
+            onClick={e => {
+              e.preventDefault();
+              setSelectedProperty('Consultation');
+              setIsContactModalOpen(true);
+            }}
+          >
+            <div className='text-body-1 text'>Get Started</div>
             <div className='icon'>
               <FontAwesomeIcon icon={faArrowRight} />
             </div>
@@ -451,7 +459,7 @@ export default function Home() {
           <div className='hero-content'>
             <div className='main-title'>
               <h1 className='title split-text effect-right'>
-                ABOUT MR. <span>RISHI MALIK</span>
+                ABOUT <span>MR. RISHI MALIK</span>
               </h1>
               <div className='text-body-2 text'>
                 Rishi Malik, CEO & Co-founder of ACE Elite Properties, is a leading Dubai real
@@ -489,6 +497,10 @@ export default function Home() {
               <h2 className='locations-title'>
                 BRANDED <span>LUXURY COLLECTION</span>
               </h2>
+              <p className='section-summary'>
+                Handpicked ultra-luxury properties from Dubai&apos;s most prestigious developers,
+                offering exclusive access to off-market and pre-launch opportunities.
+              </p>
             </div>
             <div className='locations-grid'>
               <div className='location-card'>
@@ -504,8 +516,8 @@ export default function Home() {
                   <h3 className='location-title'>CAVALLI TOWER</h3>
                   <p className='location-developer'>By Damac</p>
                   <div className='location-specs'>
-                    <span className='bedrooms'>1,2,3 BR</span>
-                    <span className='sqft'>1250sqft</span>
+                    <span className='bedrooms'>Unit: 1,2,3 BR</span>
+                    <span className='sqft'>Size: 1250sqft</span>
                   </div>
                   <div className='location-footer'>
                     <span className='price'>Price: AED 20M</span>
@@ -532,8 +544,8 @@ export default function Home() {
                   <h3 className='location-title'>ONE CANAL</h3>
                   <p className='location-developer'>By Omniyat</p>
                   <div className='location-specs'>
-                    <span className='bedrooms'>2,3,4 BR</span>
-                    <span className='sqft'>1800sqft</span>
+                    <span className='bedrooms'>Unit: 2,3,4 BR</span>
+                    <span className='sqft'>Size: 1800sqft</span>
                   </div>
                   <div className='location-footer'>
                     <span className='price'>Price: AED 35M</span>
@@ -560,8 +572,8 @@ export default function Home() {
                   <h3 className='location-title'>THE VALLEY VILLAS</h3>
                   <p className='location-developer'>By Emaar</p>
                   <div className='location-specs'>
-                    <span className='bedrooms'>3,4,5 BR</span>
-                    <span className='sqft'>2500sqft</span>
+                    <span className='bedrooms'>Unit: 3,4,5 BR</span>
+                    <span className='sqft'>Size: 2500sqft</span>
                   </div>
                   <div className='location-footer'>
                     <span className='price'>Price: AED 15M</span>
@@ -588,8 +600,8 @@ export default function Home() {
                   <h3 className='location-title'>BINGHATTI ONYX</h3>
                   <p className='location-developer'>By Binghatti</p>
                   <div className='location-specs'>
-                    <span className='bedrooms'>1,2 BR</span>
-                    <span className='sqft'>950sqft</span>
+                    <span className='bedrooms'>Unit: 1,2 BR</span>
+                    <span className='sqft'>Size: 950sqft</span>
                   </div>
                   <div className='location-footer'>
                     <span className='price'>Price: AED 8M</span>
@@ -616,8 +628,8 @@ export default function Home() {
                   <h3 className='location-title'>ELLINGTON OCEAN HOUSE</h3>
                   <p className='location-developer'>By Ellington</p>
                   <div className='location-specs'>
-                    <span className='bedrooms'>2,3,4 BR</span>
-                    <span className='sqft'>1600sqft</span>
+                    <span className='bedrooms'>Unit: 2,3,4 BR</span>
+                    <span className='sqft'>Size: 1600sqft</span>
                   </div>
                   <div className='location-footer'>
                     <span className='price'>Price: AED 25M</span>
@@ -637,8 +649,13 @@ export default function Home() {
           <div className='developers-section animate-section' id='developers'>
             <div className='dev-header'>
               <h2 className='dev-title'>
-                PARTNERSHIP WITH <span>TOP DEVELOPERS</span>
+                PARTNERSHIP <span>WITH TOP DEVELOPERS</span>
               </h2>
+              <p className='section-summary'>
+                We partner with Dubai&apos;s most prestigious developers including Emaar, Damac,
+                Omniyat, Binghatti, and Ellington to bring you exclusive access to ultra-luxury
+                properties and pre-launch opportunities.
+              </p>
             </div>
             <div className='dev-slider'>
               <button
@@ -726,6 +743,10 @@ export default function Home() {
               <h2 className='insights-title'>
                 DUBAI INSIGHTS BY <span>RISHI MALIK</span>
               </h2>
+              <p className='section-summary'>
+                Stay ahead of the market with exclusive weekly insights, market trends, and expert
+                analysis from Dubai&apos;s premier real estate expert.
+              </p>
             </div>
             <div className='insights-grid'>
               <div className='insight-card'>
@@ -799,6 +820,10 @@ export default function Home() {
               <h2 className='testimonials-title'>
                 TESTIMONIALS <span>BY INVESTORS</span>
               </h2>
+              <p className='section-summary'>
+                Real experiences from satisfied clients who have successfully invested in
+                Dubai&apos;s ultra-luxury real estate market with our expert guidance.
+              </p>
             </div>
 
             <button className='toggle' id='direction-toggle'>
@@ -1058,6 +1083,10 @@ export default function Home() {
               <h2 className='blog-title'>
                 BLOGS BY <span>RISHI MALIK</span>
               </h2>
+              <p className='section-summary'>
+                Dive deep into Dubai&apos;s luxury real estate market with expert analysis,
+                investment insights, and exclusive opportunities for discerning investors.
+              </p>
             </div>
             <div className='blog-grid'>
               <div className='blog-card'>
@@ -1377,6 +1406,29 @@ export default function Home() {
       </ul>
 
       {/* Contact Modal */}
+      {/* Footer */}
+      <footer className='site-footer'>
+        <nav className='footer-links'>
+          <Link href='#home'>HOME</Link>
+          <span className='separator'> | </span>
+          <a
+            href='https://aceeliteproperties.com/privacy'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            PRIVACY POLICY
+          </a>
+          <span className='separator'> | </span>
+          <a
+            href='https://aceeliteproperties.com/privacy'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            TERM & CONDITIONS
+          </a>
+        </nav>
+      </footer>
+
       {isContactModalOpen && (
         <div className='contact-modal-overlay' onClick={closeContactModal}>
           <div className='contact-modal' onClick={e => e.stopPropagation()}>
