@@ -372,7 +372,7 @@ export default function Home() {
           <ul className='social-links justify-content-center'>
             <li>
               <a
-                href='https://www.instagram.com/aceeliteproperties/'
+                href='https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqa0RNZXFoUnVPNWwxcE9lMEtDMzhhN0dSeFVyUXxBQ3Jtc0ttLWZVRDB6YjY3V19neGgwcTZBSHdvUXVhQng5cGszblp2NVJ3TUp2NUIyZjYySzJSUzlwUFRESG9tTFBWU01vWXpCc1lLUTRlS0lpTVFkOE1JdmlVeGRPSmEtcEItWU80b0pKWF9uX1NVa2tkcU15cw&q=https%3A%2F%2Fwww.instagram.com%2Frishimalik.dxb%2F'
                 target='_blank'
                 aria-label='Instagram'
               >
@@ -391,7 +391,11 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a href='https://www.youtube.com/' target='_blank' aria-label='YouTube'>
+              <a
+                href='https://www.youtube.com/@dxb.rishimalik'
+                target='_blank'
+                aria-label='YouTube'
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
@@ -406,7 +410,7 @@ export default function Home() {
             </li>
             <li>
               <a
-                href='https://www.facebook.com/people/Ace-Elite-Properties/61572930571115/'
+                href='https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqa1M1MGREdE4yV1Y4Qy1PWHNrOU9BZTlqRU0wd3xBQ3Jtc0treER2YV9IVXVLUzNkdm5SWVpHa3dMeFd4VFphUFk2bFk3Q3M3a1Q1X0RCZW1lSmhrVC04S1Zld3dhcjdBOENqQ3M2UGgzM2R4eFpmQU1IT3ZrUFhEM0huWDRHWWtFVFFBaGlYQlk5XzRqMHBuaVpESQ&q=https%3A%2F%2Fwww.facebook.com%2Fshare%2F17c6c27nx1%2F%3Fmibextid%3DwwXIfr'
                 target='_blank'
                 aria-label='Facebook'
               >
@@ -428,7 +432,11 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a href='https://twitter.com/' target='_blank' aria-label='Twitter'>
+              <a
+                href='https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbUlMT3lnbElWVXJIX3VPaFc5ZXZfSHJicktxd3xBQ3Jtc0tud2xOUmhqTkYxMklrY3VwQ01yMUx2NUo1SlNFZXhaNW94UW5TNXdMUXpEMGVKM2pVbmRDQzBxMDFUOUI4bk9VblBOc2E1eUpRRUtOM1dhbFhjUUhmeXE3bnRyUmdFYURQcmdkX21QS0d3dU82OEpZbw&q=https%3A%2F%2Fx.com%2Frishimalikdubai%3Fs%3D11%26t%3D66XwwdxhqVwsBMkrhI0mHA'
+                target='_blank'
+                aria-label='Twitter'
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='24'
