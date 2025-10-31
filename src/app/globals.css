@@ -1350,6 +1350,7 @@ nav {
   font-weight: normal;
   font-style: normal;
   font-size: 16px;
+  margin-bottom: 12px;
 }
 .main-title .title .infor {
   margin-bottom: 84px;
@@ -1715,7 +1716,7 @@ nav {
 }
 
 .testimonial-content p {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 20px;
@@ -1851,7 +1852,7 @@ nav {
   }
 
   .testimonial-content p {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .testimonial-author h4 {
@@ -2564,7 +2565,7 @@ h6 span,
   }
 
   .testimonial-content p {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.5;
   }
 
@@ -2880,6 +2881,7 @@ h6 span,
   .main-title .text {
     font-size: 13px;
     line-height: 1.4;
+    margin-bottom: 8px;
   }
 
   .list-tags a {
@@ -3008,7 +3010,7 @@ h6 span,
   .main-title .text {
     font-size: 10px;
     line-height: 1.3;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
   }
 
   .list-tags {
