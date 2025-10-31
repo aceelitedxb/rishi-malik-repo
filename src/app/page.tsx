@@ -472,11 +472,24 @@ export default function Home() {
                 ABOUT <span>MR. RISHI MALIK</span>
               </h1>
               <div className='text-body-2 text'>
-                Rishi Malik, CEO & Co-founder of ACE Elite Properties, is a leading Dubai real
-                estate expert specializing in ultra-luxury apartments, penthouses, and villas.
-                Partnered with top developers like Emaar, Damac, and Omniyat, he offers clients
-                exclusive access to off-market and pre-launch opportunities across the city’s most
-                iconic communities.
+                Rishi Malik, CEO & co‑founder of ACE Elite Properties, is a trusted Dubai luxury
+                real estate advisor. With more than 15 years of experience helping global investors
+                and families, he specializes in high‑end apartments, penthouses, and villas across
+                Downtown Dubai, Dubai Marina, Palm Jumeirah, and other prestigious communities.
+              </div>
+              <div className='text-body-2 text'>
+                Partnered with leading developers like Emaar, Damac, and Omniyat, Rishi provides
+                exclusive access to off‑market and pre‑launch property deals. He has guided clients
+                from over 25 countries and facilitated more than AED 500 million in transactions in
+                just 2 years, earning the trust of Ultra High Net Worth Individuals looking for
+                prime real estate investments.
+              </div>
+              <div className='text-body-2 text'>
+                Whether you’re investing in an off‑plan project or searching for a turnkey villa,
+                Rishi combines deep market knowledge, transparent service, and elite developer
+                networks to ensure seamless purchases and maximise returns. Reach out to Rishi Malik
+                today to find your ideal luxury property in Dubai and secure a smart
+                investment for the future.
               </div>
             </div>
             <ul className='list-tags'>
@@ -850,56 +863,93 @@ export default function Home() {
                   <div className='testimonial-card'>
                     <div className='testimonial-content'>
                       <p>
-                        &ldquo;I had an amazing experience purchasing an off-plan property through
-                        this platform. The team guided me through every step, provided detailed
-                        insights, and ensured a smooth transaction. Highly recommended for anyone
-                        looking to invest in Dubai real estate!&rdquo;
+                        &ldquo;My wife and I had been dreaming about owning a holiday home in Dubai,
+                        but we were overwhelmed by all the options. From day one, Rishi listened to
+                        our wishlist, explained local regulations and payment plans clearly, and
+                        even arranged a virtual tour when I couldn’t travel. The whole experience
+                        felt personal and transparent — we ended up with a beautiful villa, and
+                        Rishi felt more like a friend than an agent&rdquo;
                       </p>
                       <div className='testimonial-author'>
-                        <h4>Michael R.</h4>
-                        <span>Investor</span>
+                        <h4>Arjun Kuma.</h4>
+                        <span>India</span>
                       </div>
                     </div>
                   </div>
                   <div className='testimonial-card'>
                     <div className='testimonial-content'>
                       <p>
-                        &ldquo;After searching for months, I finally found the perfect villa thanks
-                        to this website. The listings were up-to-date, and the agents were extremely
-                        helpful. They understood my requirements and made the entire process
-                        stress-free.&rdquo;
+                        &ldquo;Relocating from Berlin to Dubai for work, I was anxious about finding
+                        the right place. Rishi took the time to understand my budget and lifestyle
+                        and found me a wonderful apartment in Business Bay. What impressed me most
+                        was his honesty; he pointed out both the advantages and the potential
+                        drawbacks of each option. I felt informed and supported the whole way
+                        through.&rdquo;
                       </p>
                       <div className='testimonial-author'>
-                        <h4>Sarah L.</h4>
-                        <span>Homeowner</span>
+                        <h4>Priya Menon</h4>
+                        <span>Germany</span>
                       </div>
                     </div>
                   </div>
                   <div className='testimonial-card'>
                     <div className='testimonial-content'>
                       <p>
-                        &ldquo;As a first-time investor in Dubai, I was unsure about the market. The
-                        team not only provided great property options but also gave me valuable
-                        advice on ROI and future growth potential. Their expertise made all the
-                        difference!&rdquo;
+                        &ldquo;As an investor from Munich, I’m used to working with agents across
+                        Europe, and Rishi truly stands out. He introduced me to off‑plan projects I
+                        wouldn’t have discovered on my own and helped me negotiate a flexible
+                        payment schedule. He kept me updated at every stage, and his professionalism
+                        and market knowledge made me feel secure in my decision&rdquo;
                       </p>
                       <div className='testimonial-author'>
-                        <h4>James T.</h4>
-                        <span>Real Estate Investor</span>
+                        <h4>Markus Becker</h4>
+                        <span>Germany</span>
                       </div>
                     </div>
                   </div>
                   <div className='testimonial-card'>
                     <div className='testimonial-content'>
                       <p>
-                        &ldquo;From my initial inquiry to the final handover, the service was
-                        top-notch. The agents were transparent, knowledgeable, and always available
-                        to answer my questions. I couldn&apos;t have asked for a better experience
-                        in buying my new apartment.&rdquo;
+                        &ldquo;I’m based in Los Angeles and wanted to diversify my portfolio with a
+                        property in Dubai. A colleague recommended Rishi, and I’m so glad he did. He
+                        patiently answered my endless questions, provided honest market insights,
+                        and made the long‑distance transaction feel surprisingly simple. It was
+                        clear he cared about my long‑term success, not just closing a deal.&rdquo;
                       </p>
                       <div className='testimonial-author'>
-                        <h4>Aisha K.</h4>
-                        <span>Dubai Resident</span>
+                        <h4>Emily Johnson </h4>
+                        <span>United States</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;I had only a few days in Dubai and needed a high‑return investment
+                        quickly. Rishi arranged viewings across several neighborhoods on my first
+                        day and had all the paperwork ready when I made a decision. His deep
+                        knowledge of the market and connections with developers made the process
+                        seamless. Even after closing, he checked in to make sure everything was
+                        progressing smoothly.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>David Morgan </h4>
+                        <span>Canada</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='testimonial-card'>
+                    <div className='testimonial-content'>
+                      <p>
+                        &ldquo;Buying property abroad can be intimidating, especially with language
+                        barriers. Rishi spoke clear English and even provided translated materials
+                        for me. He listened to my preferences and never pushed properties I wasn’t
+                        interested in. I now own a lovely apartment in Dubai Hills that has already
+                        increased in value. Working with Rishi was a pleasure.&rdquo;
+                      </p>
+                      <div className='testimonial-author'>
+                        <h4>Li Wei </h4>
+                        <span>China</span>
                       </div>
                     </div>
                   </div>
