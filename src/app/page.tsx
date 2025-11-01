@@ -1462,6 +1462,109 @@ export default function Home() {
       </ul>
 
       {/* Contact Modal */}
+      {/* Fixed Bottom Navigation */}
+      <div className='bottom-nav-glass'>
+        <div className='bottom-nav-content'>
+          <div className='bottom-social-icons'>
+            <a
+              href='https://www.instagram.com/rishimalik.dxb/'
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label='Instagram'
+              className='bottom-social-link'
+            >
+              <svg
+                fill='currentColor'
+                width='24'
+                height='24'
+                viewBox='-2 -2 24 24'
+                xmlns='http://www.w3.org/2000/svg'
+                preserveAspectRatio='xMinYMin'
+              >
+                <path d='M14.017 0h-8.07A5.954 5.954 0 0 0 0 5.948v8.07a5.954 5.954 0 0 0 5.948 5.947h8.07a5.954 5.954 0 0 0 5.947-5.948v-8.07A5.954 5.954 0 0 0 14.017 0zm3.94 14.017a3.94 3.94 0 0 1-3.94 3.94h-8.07a3.94 3.94 0 0 1-3.939-3.94v-8.07a3.94 3.94 0 0 1 3.94-3.939h8.07a3.94 3.94 0 0 1 3.939 3.94v8.07z'></path>
+                <path d='M9.982 4.819A5.17 5.17 0 0 0 4.82 9.982a5.17 5.17 0 0 0 5.163 5.164 5.17 5.17 0 0 0 5.164-5.164A5.17 5.17 0 0 0 9.982 4.82zm0 8.319a3.155 3.155 0 1 1 0-6.31 3.155 3.155 0 0 1 0 6.31z'></path>
+                <circle cx='15.156' cy='4.858' r='1.237'></circle>
+              </svg>
+            </a>
+            <a
+              href='https://www.youtube.com/@dxb.rishimalik'
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label='YouTube'
+              className='bottom-social-link'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='currentColor'
+              >
+                <path d='M23.5 6.2a3 3 0 0 0-2.1-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.7.6 9.4.6 9.4.6s7.7 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.8 15.5v-7L15.5 12l-5.7 3.5z' />
+              </svg>
+            </a>
+            <a
+              href='https://www.facebook.com/people/Rishi-Malik/61551906669294'
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label='Facebook'
+              className='bottom-social-link'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <path d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'></path>
+              </svg>
+            </a>
+            <a
+              href='https://x.com/rishimalikdubai'
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label='Twitter'
+              className='bottom-social-link'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='currentColor'
+              >
+                <path d='M22.46 6c-.77.35-1.6.58-2.46.69a4.14 4.14 0 0 0 1.82-2.28 8.2 8.2 0 0 1-2.6 1 4.11 4.11 0 0 0-7 3.75A11.67 11.67 0 0 1 3.15 4.6a4.1 4.1 0 0 0 1.27 5.48 4.07 4.07 0 0 1-1.86-.52v.05a4.11 4.11 0 0 0 3.3 4.03c-.45.12-.92.18-1.4.07a4.12 4.12 0 0 0 3.84 2.85A8.24 8.24 0 0 1 2 19.54a11.63 11.63 0 0 0 6.29 1.84c7.55 0 11.68-6.26 11.68-11.68 0-.18 0-.36-.01-.54A8.36 8.36 0 0 0 24 6.5c-.83.37-1.72.63-2.64.73z' />
+              </svg>
+            </a>
+          </div>
+          <button
+            className='bottom-contact-button'
+            onClick={() => scrollToSection('contact')}
+            aria-label='Contact Now'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='18'
+              height='18'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'></path>
+            </svg>
+            Contact Now
+          </button>
+        </div>
+      </div>
+
       {/* Footer */}
       <footer className='site-footer'>
         <nav className='footer-links'>

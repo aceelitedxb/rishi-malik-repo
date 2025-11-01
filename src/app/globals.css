@@ -3297,3 +3297,157 @@ h6 span,
     min-width: unset;
   }
 }
+
+/* Fixed Bottom Navigation with Glassmorphism */
+.bottom-nav-glass {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 12px 20px;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(0, 0, 0, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -8px 32px 0 rgba(0, 0, 0, 0.6);
+}
+
+.bottom-nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.bottom-social-icons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.bottom-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.bottom-social-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.bottom-social-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bottom-contact-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
+.bottom-contact-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 1);
+}
+
+.bottom-contact-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Adjust footer padding to account for fixed bottom nav */
+.site-footer {
+  padding-bottom: 80px;
+}
+
+/* Responsive Bottom Navigation */
+@media (max-width: 768px) {
+  .bottom-nav-glass {
+    padding: 10px 16px;
+  }
+
+  .bottom-nav-content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .bottom-social-icons {
+    gap: 12px;
+  }
+
+  .bottom-social-link {
+    width: 40px;
+    height: 40px;
+  }
+
+  .bottom-social-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .bottom-contact-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  .bottom-contact-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bottom-nav-content {
+    gap: 12px;
+  }
+
+  .bottom-social-icons {
+    gap: 8px;
+  }
+
+  .bottom-social-link {
+    width: 36px;
+    height: 36px;
+  }
+
+  .bottom-social-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .bottom-contact-button {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
